@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to handle me — a self-care dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css">
+<style>
+:root{
+  --ink:#28324C; --ink-soft:#5B6577; --line:#E4E7EA;
+  --paper:#FFFFFF; --bg1:#EAF1F4; --bg2:#F6F1E9;
+  --oranje:#F5821F; --rood:#C8102E; --alp:#3C6E8F; --gold:#E0A93C; --green:#4E9A5B;
+  --radius:18px; --shadow:0 10px 30px rgba(40,50,76,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink); font-family:"Inter",system-ui,sans-serif;
+  background:linear-gradient(170deg,var(--bg1) 0%,var(--bg2) 100%); background-attachment:fixed;
+  line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.shell{max-width:980px;margin:0 auto;padding:28px 20px 64px}
+h1,h2,h3{font-family:"Baloo 2",cursive;margin:0;line-height:1.15;letter-spacing:-.01em}
+a{color:var(--alp)}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--alp);margin:0 0 6px}
+
+/* header */
+header{text-align:center;padding:18px 0 26px}
+header h1{font-size:clamp(30px,5vw,46px);font-weight:700}
+header p{margin:8px auto 0;max-width:460px;color:var(--ink-soft);font-size:16px}
+.pills{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:16px 0 0}
+.pill{font-size:12.5px;font-weight:500;color:var(--ink-soft);background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+
+/* cards / sections */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+section{margin-top:26px}
+.sec-head{margin:0 0 14px}
+.sec-head h2{font-size:24px;font-weight:600}
+.sec-head .lead{color:var(--ink-soft);font-size:15px;margin:4px 0 0}
+
+/* mood panel */
+.panel{display:grid;grid-template-columns:300px 1fr;gap:0}
+.stage{padding:26px;border-right:1px solid var(--line);text-align:center;background:linear-gradient(180deg,#F3F7F9,#FFFFFF)}
+.avatar{display:flex;justify-content:center;align-items:flex-end;height:300px}
+.avatar svg{transform-origin:center bottom;will-change:transform}
+.moodname{font-family:"Baloo 2",cursive;font-weight:600;font-size:22px;margin:10px 0 2px;text-transform:capitalize}
+.meter{height:10px;background:#EDEFF2;border-radius:999px;overflow:hidden;margin:12px auto 6px;max-width:220px}
+.meter-fill{height:100%;width:80%;border-radius:999px;transition:width .5s ease,background .5s ease}
+.meter-label{font-size:12px;color:var(--ink-soft)}
+.controls{padding:26px}
+.controls .hint{font-size:14px;color:var(--ink-soft);margin:0 0 14px}
+.moodgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px}
+.mood-btn{display:flex;align-items:center;gap:9px;background:#FBFCFD;border:1px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;font:inherit;font-weight:500;color:var(--ink);text-align:left;transition:transform .12s,border-color .15s,background .15s}
+.mood-btn:hover{transform:translateY(-2px);background:#fff}
+.mood-btn[aria-pressed="true"]{border-color:var(--ink);background:#fff;box-shadow:0 0 0 1px var(--ink)}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.nudge{margin-top:18px;padding:15px 16px;background:#F3F7F9;border-left:3px solid var(--alp);border-radius:0 12px 12px 0;font-size:15px}
+.nudge b{font-family:"Baloo 2",cursive;font-weight:600}
+
+/* lifecycle */
+.life{padding:24px 26px}
+.life-controls{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.age{font-family:"Baloo 2",cursive;font-weight:700;font-size:34px;min-width:64px}
+.age small{font-size:14px;font-weight:500;color:var(--ink-soft);display:block;margin-top:-6px}
+input[type=range]{flex:1;min-width:180px;accent-color:var(--oranje);height:6px}
+.btn{font:inherit;font-weight:600;border-radius:11px;padding:10px 18px;border:1px solid transparent;cursor:pointer;transition:transform .12s,filter .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--oranje);color:#fff}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-ghost{background:#fff;border-color:var(--line);color:var(--ink)}
+.timeline{margin:22px 0 0;display:flex;flex-direction:column;gap:0;position:relative}
+.tl-item{display:flex;gap:14px;padding:0 0 16px;opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s}
+.tl-item.show{opacity:1;transform:none}
+.tl-rail{display:flex;flex-direction:column;align-items:center;flex:none}
+.tl-node{width:32px;height:32px;border-radius:50%;background:#FFF4EC;border:2px solid var(--oranje);display:flex;align-items:center;justify-content:center;font-size:16px;margin-top:2px;flex:none}
+.tl-line{width:2px;flex:1;background:var(--line);margin-top:3px}
+.tl-item:last-child .tl-line{display:none}
+.tl-age{font-family:"Baloo 2",cursive;font-weight:600;font-size:13px;color:var(--alp)}
+.tl-body h4{margin:0;font-size:16px;font-family:"Baloo 2",cursive;font-weight:600}
+.tl-body p{margin:2px 0 0;font-size:14px;color:var(--ink-soft)}
+
+/* quiz */
+.quiz{padding:24px 26px}
+.q{margin:0 0 20px}
+.q p{font-weight:600;margin:0 0 9px;font-size:15.5px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px}
+.opt{font:inherit;text-align:left;background:#FBFCFD;border:1px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer;color:var(--ink);transition:transform .12s,border-color .15s,background .15s}
+.opt:hover{transform:translateY(-2px);background:#fff}
+.opt[aria-pressed="true"]{border-color:var(--oranje);background:#FFF6EE;box-shadow:0 0 0 1px var(--oranje)}
+.result{margin-top:8px;padding:22px;border-radius:14px;background:linear-gradient(160deg,#FFF6EE,#F3F7F9);border:1px solid var(--line);display:none}
+.result.show{display:block;animation:pop .4s ease}
+@keyframes pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.result h3{font-size:21px;font-weight:700}
+.result .match{font-weight:600;color:var(--oranje);margin:2px 0 12px;font-family:"Baloo 2",cursive}
+.result ul{margin:10px 0 0;padding:0;list-style:none}
+.result li{padding:7px 0 7px 26px;position:relative;font-size:15px}
+.result li::before{content:"";position:absolute;left:4px;top:13px;width:9px;height:9px;border-radius:50%;background:var(--green)}
+.result .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.toast{font-size:13px;color:var(--green);font-weight:600;align-self:center;opacity:0;transition:opacity .2s}
+.toast.show{opacity:1}
+footer{text-align:center;color:var(--ink-soft);font-size:13px;margin-top:34px}
+
+/* passport */
+.passport{padding:24px 26px}
+.bignum{font-family:"Baloo 2",cursive;font-weight:700;font-size:46px;color:var(--oranje);line-height:1}
+.bignum small{font-size:15px;font-weight:500;color:var(--ink-soft);font-family:"Inter",sans-serif}
+.group{margin-top:18px}
+.group h4{font-family:"Baloo 2",cursive;font-weight:600;font-size:13px;color:var(--alp);margin:0 0 8px;letter-spacing:.04em;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-size:12.5px;background:#F3F7F9;border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--ink)}
+/* good to know */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:24px 26px}
+.fact{background:#FBFCFD;border:1px solid var(--line);border-radius:13px;padding:14px 15px}
+.fact .k{font-family:"Baloo 2",cursive;font-weight:600;font-size:15px;margin:0 0 3px}
+.fact .v{font-size:13.5px;color:var(--ink-soft);margin:0;line-height:1.5}
+
+/* section avatars */
+.sec-head{display:flex;align-items:center;gap:13px}
+.sec-txt{flex:1;min-width:0}
+.sec-ava{flex:none;width:50px;height:50px;border-radius:50%;background:#F3F7F9;border:1px solid var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;animation:bob 3.4s ease-in-out infinite}
+.sec-ava svg{height:58px;width:auto;display:block}
+/* mood button avatars */
+.btn-ava{flex:none;width:32px;height:32px;border-radius:50%;overflow:hidden;background:#F3F7F9;border:2px solid var(--line);display:flex;align-items:center;justify-content:center}
+.btn-ava svg{height:38px;width:auto;display:block}
+/* soundtrack / equalizer */
+.sound{display:flex;align-items:center;gap:24px;padding:26px;flex-wrap:wrap}
+.eq{display:flex;align-items:flex-end;gap:5px;height:66px;flex:none}
+.eq span{width:7px;border-radius:3px;background:linear-gradient(180deg,var(--oranje),var(--gold));height:30%;animation:eq 1s ease-in-out infinite}
+.eq span:nth-child(1){animation-duration:.9s;animation-delay:0s}
+.eq span:nth-child(2){animation-duration:1.2s;animation-delay:.15s}
+.eq span:nth-child(3){animation-duration:.7s;animation-delay:.05s}
+.eq span:nth-child(4){animation-duration:1.1s;animation-delay:.3s}
+.eq span:nth-child(5){animation-duration:.8s;animation-delay:.1s}
+.eq span:nth-child(6){animation-duration:1.3s;animation-delay:.2s}
+.eq span:nth-child(7){animation-duration:.95s;animation-delay:.35s}
+.eq span:nth-child(8){animation-duration:.75s;animation-delay:.05s}
+.eq span:nth-child(9){animation-duration:1.15s;animation-delay:.25s}
+.eq span:nth-child(10){animation-duration:.85s;animation-delay:.12s}
+.eq span:nth-child(11){animation-duration:1.05s;animation-delay:.3s}
+.eq span:nth-child(12){animation-duration:.9s;animation-delay:.08s}
+.sound-txt{flex:1;min-width:210px}
+.sound-txt h3{font-size:20px;font-weight:700}
+.sound-txt p{margin:6px 0 0;color:var(--ink-soft);font-size:15px}
+/* reveal, chips, node pulse */
+body.reveal section{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+body.reveal section.in{opacity:1;transform:none}
+.chip{opacity:0;animation:chipIn .45s ease forwards}
+.tl-item.show .tl-node{animation:nodePulse 1.5s ease-out}
+@keyframes eq{0%,100%{height:22%}50%{height:100%}}
+@keyframes chipIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes nodePulse{0%{box-shadow:0 0 0 0 rgba(245,130,31,.5)}100%{box-shadow:0 0 0 11px rgba(245,130,31,0)}}
+
+/* marathon race strip */
+.race{padding:24px 26px}
+.race-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:12px}
+.rstat{background:#FBFCFD;border:1px solid var(--line);border-radius:12px;padding:13px 10px;text-align:center}
+.rnum{font-family:"Baloo 2",cursive;font-weight:700;font-size:26px;color:var(--oranje);display:block;line-height:1}
+.rlab{font-size:12px;color:var(--ink-soft)}
+.track-wrap{margin:26px 0 6px}
+.track{position:relative;height:14px;background:#EDEFF2;border-radius:999px}
+.track-fill{height:100%;width:100%;border-radius:999px;background:linear-gradient(90deg,var(--alp),var(--oranje))}
+.marker{position:absolute;top:-4px;width:2px;height:22px;background:rgba(40,50,76,.22);border-radius:2px}
+.marker.hot{width:3px;background:var(--rood)}
+.runner{position:absolute;top:50%;left:100%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;overflow:hidden;background:#fff;border:2px solid var(--oranje);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.runner svg{height:42px;width:auto;display:block}
+.track-labels{position:relative;height:18px;margin-top:12px;font-size:11.5px;color:var(--ink-soft)}
+.track-labels span{position:absolute;top:0;white-space:nowrap;transform:translateX(-50%)}
+.track-labels span:first-child{transform:translateX(0)}
+.track-labels span:last-child{transform:translateX(-100%)}
+.race-note{margin:18px 0 0;font-size:14.5px;line-height:1.6}
+.race-note b{font-family:"Baloo 2",cursive;font-weight:600;color:var(--rood)}
+.race.run .track-fill{animation:fill 5.5s linear forwards}
+.race.run .runner{animation:run 5.5s linear forwards}
+.runner.limping svg{animation:limp .5s ease-in-out infinite}
+.marker.hot{transform-origin:center;animation:hotpulse 1.1s ease-in-out infinite}
+.replay-btn{margin-top:14px}
+@keyframes fill{0%{width:0}30%{width:50%}100%{width:100%}}
+@keyframes run{0%{left:0}30%{left:50%}100%{left:100%}}
+@keyframes limp{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(5deg) translateY(2px)}}
+@keyframes hotpulse{0%,100%{opacity:.55;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.4)}}
+
+/* recommendations */
+.usa-note{margin:18px 0 0;font-size:13.5px;font-style:italic;color:var(--ink-soft)}
+.recs{padding:22px 26px;margin-top:14px}
+.recs-head h3{font-size:19px;font-weight:700}
+.recs-head p{margin:3px 0 0;color:var(--ink-soft);font-size:14px}
+.recs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:14px}
+.rec{display:flex;gap:12px;align-items:flex-start;background:#FBFCFD;border:1px solid var(--line);border-radius:13px;padding:13px 14px;transition:transform .15s,box-shadow .15s}
+.rec:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.rec-flag{font-size:30px;line-height:1;animation:floaty 4s ease-in-out infinite}
+.rec:nth-child(2) .rec-flag{animation-delay:.5s}
+.rec:nth-child(3) .rec-flag{animation-delay:1s}
+.rec:nth-child(4) .rec-flag{animation-delay:1.5s}
+.rec-body h4{margin:0;font-family:"Baloo 2",cursive;font-weight:600;font-size:16px}
+.rec-body p{margin:3px 0 0;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.star{color:var(--gold);animation:twinkle 1.8s ease-in-out infinite}
+/* out of office scenes */
+.oo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;padding:24px 26px}
+.oo{background:#FBFCFD;border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.oo:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.oo svg{display:block;width:100%;height:auto}
+.oo-cap{padding:13px 15px}
+.oo-cap h4{margin:0;font-family:"Baloo 2",cursive;font-weight:600;font-size:15px}
+.oo-cap p{margin:3px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.5}
+.oo-tag{display:inline-block;font-size:11px;font-weight:600;color:#fff;background:var(--alp);border-radius:999px;padding:2px 10px;margin-top:8px}
+.snow{animation-name:snowfall;animation-timing-function:linear;animation-iteration-count:infinite}
+.climber{animation:climb 4.5s ease-in-out infinite alternate}
+.pflags{transform-origin:14px 36px;animation:flagsway 3s ease-in-out infinite}
+.sunpulse{transform-origin:186px 30px;animation:sun 3s ease-in-out infinite}
+/* hover micro-interactions */
+.fact{transition:transform .15s,box-shadow .15s}
+.fact:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.chip{transition:transform .12s,background .15s}
+.chip:hover{transform:translateY(-2px);background:#fff}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes twinkle{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.18)}}
+@keyframes snowfall{0%{transform:translateY(-4px);opacity:0}15%{opacity:.95}100%{transform:translateY(74px);opacity:0}}
+@keyframes climb{0%{transform:translate(0,0)}100%{transform:translate(46px,-78px)}}
+@keyframes flagsway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+@keyframes sun{0%,100%{opacity:.82;transform:scale(1)}50%{opacity:1;transform:scale(1.09)}}
+
+/* clubs */
+.clubs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;padding:24px 26px}
+.club{display:flex;gap:14px;align-items:center;background:#FBFCFD;border:1px solid var(--line);border-radius:14px;padding:14px;transition:transform .15s,box-shadow .15s}
+.club:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.club-home{border-color:#E30613;box-shadow:0 0 0 1px #E30613 inset}
+.crest{width:54px;height:auto;flex:none;animation:floaty 4s ease-in-out infinite}
+.club:nth-child(2) .crest{animation-delay:.4s}
+.club:nth-child(3) .crest{animation-delay:.8s}
+.club-flags{font-size:32px;flex:none;width:54px;text-align:center;line-height:1.1;animation:floaty 4s ease-in-out infinite;animation-delay:1.2s}
+.club-body h4{margin:0;font-family:"Baloo 2",cursive;font-weight:600;font-size:16px}
+.club-body p{margin:3px 0 0;font-size:13px;color:var(--ink-soft);line-height:1.5}
+/* play button + live equalizer */
+.play-btn{display:inline-flex;align-items:center;gap:8px;margin-top:13px;font:inherit;font-weight:600;color:#fff;background:var(--oranje);border:none;border-radius:11px;padding:9px 16px;cursor:pointer;transition:transform .12s,filter .15s}
+.play-btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.play-ico{font-size:12px;line-height:1}
+.play-note{margin:9px 0 0;font-size:11.5px;font-style:italic;color:var(--ink-soft)}
+.eq.live span{animation:none;transition:height .08s linear}
+
+/* flag icons */
+.fi{border-radius:2px;vertical-align:-2px}
+.chip .fi{margin-right:2px}
+.rec-flag .fi{font-size:36px;border-radius:4px;display:block}
+.club-flags{display:flex;flex-direction:column;gap:5px;align-items:center}
+.club-flags .fi{font-size:26px;border-radius:4px}
+.fact .k .fi{margin-right:5px;font-size:18px}
+.usa-note .fi{margin:0 2px}
+
+/* globe + counts table */
+.globe-wrap{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:center;margin:18px 0 6px}
+.globe-col{text-align:center}
+#globe{width:300px;height:300px;max-width:100%;cursor:grab;touch-action:none}
+#globe:active{cursor:grabbing}
+.globe-note{font-size:12px;color:var(--ink-soft);margin:9px 0 0}
+.counts{width:100%;border-collapse:collapse;font-size:14px}
+.counts th,.counts td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+.counts thead th{font-family:"Baloo 2",cursive;font-size:12px;color:var(--alp);text-transform:uppercase;letter-spacing:.05em}
+.counts td:last-child,.counts th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.counts tfoot th{font-family:"Baloo 2",cursive;font-size:17px;color:var(--ink);border-bottom:none;border-top:2px solid var(--line)}
+@media (max-width:680px){.globe-wrap{grid-template-columns:1fr}#globe{width:240px;height:240px}}
+.flatmap{width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
+/* good-to-know tabs */
+.gtk{padding:22px 26px}
+.gtk .facts{padding:0}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.tab{font:inherit;font-weight:600;font-size:13px;color:var(--ink);background:#FBFCFD;border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;transition:transform .12s,background .15s,color .15s,border-color .15s}
+.tab:hover{transform:translateY(-2px)}
+.tab.active{background:var(--oranje);color:#fff;border-color:var(--oranje)}
+.fact.hide{display:none}
+
+/* animations */
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}30%{transform:translateY(-9px)}55%{transform:translateY(0)}70%{transform:translateY(-3px)}}
+@keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-1.5px)}75%{transform:translateX(1.5px)}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+.anim-bob svg{animation:bob 3.4s ease-in-out infinite}
+.anim-bounce svg{animation:bounce 1.1s ease-in-out infinite}
+.anim-sway svg{animation:sway 3.6s ease-in-out infinite}
+.anim-shake svg{animation:shake .26s linear infinite}
+.anim-breathe svg{animation:breathe 1.5s ease-in-out infinite}
+.anim-slump svg{transform:translateY(5px) rotate(-2deg)}
+.anim-still svg{transform:none}
+
+@media (max-width:760px){
+  .panel{grid-template-columns:1fr}
+  .stage{border-right:none;border-bottom:1px solid var(--line)}
+}
+@media (prefers-reduced-motion:reduce){
+  .avatar svg,.sec-ava,.eq span,.snow,.climber,.pflags,.sunpulse,.rec-flag,.star,.marker.hot,.runner.limping svg{animation:none!important}
+  .chip{opacity:1;animation:none!important}
+  .track-fill{width:100%!important;animation:none!important}
+  .runner{left:100%!important;animation:none!important}
+  body.reveal section{opacity:1;transform:none}
+  *{scroll-behavior:auto}
+}
+:focus-visible{outline:3px solid var(--alp);outline-offset:2px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header>
+    <p class="eyebrow">Thomas Zijlstra · my self-care story</p>
+    <h1>How to handle me</h1>
+    <p>A direct, sincere (and occasionally silly) field guide to my moods, my values, and the fastest ways to work well with me.</p>
+    <div class="pills">
+      <span class="pill">Dutch–Austrian</span><span class="pill">Zürich</span>
+      <span class="pill">Sporty</span><span class="pill">33</span><span class="pill">56 countries</span>
+    </div>
+  </header>
+
+  <!-- MOOD PANEL -->
+  <section>
+    <div class="sec-head">
+      <h2>Today's mood</h2>
+      <p class="lead">Tap a mood to see where my battery's at and the kindest way to meet me there.</p>
+    </div>
+    <div class="card panel">
+      <div class="stage">
+        <div id="avatarWrap" class="avatar anim-bob">
+          <svg id="avatar" viewBox="0 0 220 392" width="170" height="303" role="img" aria-label="A friendly full-body avatar reflecting the current mood.">
+            <ellipse cx="110" cy="376" rx="46" ry="6" fill="#000" opacity="0.06"/>
+            <path d="M88 195 Q110 201 132 195 L130 350 L116 350 L110 226 L104 350 L90 350 Z" fill="#28324C"/>
+            <rect x="87" y="191" width="46" height="6" fill="#1E2740"/>
+            <path d="M91 202 L92 348" fill="none" stroke="#F4F4F2" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M129 202 L128 348" fill="none" stroke="#F4F4F2" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M84 348 L100 348 L102 360 Q102 367 93 367 L80 367 Q77 359 84 354 Z" fill="#F4F4F2" stroke="#C9C9C3" stroke-width="1.5"/>
+            <path d="M118 348 L134 348 L138 354 Q145 359 142 367 L129 367 Q118 367 118 360 Z" fill="#F4F4F2" stroke="#C9C9C3" stroke-width="1.5"/>
+            <path d="M86 356 Q92 360 98 356" fill="none" stroke="#C8102E" stroke-width="2"/>
+            <path d="M122 356 Q128 360 134 356" fill="none" stroke="#C8102E" stroke-width="2"/>
+            <path d="M70 144 Q66 168 73 198 L82 198 Q83 168 84 148 Z" fill="#EFC4A2"/>
+            <path d="M150 144 Q154 168 147 198 L138 198 Q137 168 136 148 Z" fill="#EFC4A2"/>
+            <ellipse cx="77" cy="201" rx="6" ry="7" fill="#EFC4A2"/>
+            <ellipse cx="143" cy="201" rx="6" ry="7" fill="#EFC4A2"/>
+            <rect x="103" y="100" width="14" height="14" fill="#EFC4A2"/>
+            <path d="M84 120 Q84 110 98 107 L122 107 Q136 110 136 120 L134 158 L132 196 Q110 203 88 196 L86 158 Z" fill="#F4F4F2" stroke="#DADAD4" stroke-width="1.5"/>
+            <path d="M100 107 Q110 114 120 107" fill="none" stroke="#DADAD4" stroke-width="2.5"/>
+            <path d="M84 120 Q72 121 69 140 L84 146 L88 124 Z" fill="#F4F4F2" stroke="#DADAD4" stroke-width="1"/>
+            <path d="M71 130 L87 130" fill="none" stroke="#F5821F" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M70 137 L86 137" fill="none" stroke="#F5821F" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M136 120 Q148 121 151 140 L136 146 L132 124 Z" fill="#F4F4F2" stroke="#DADAD4" stroke-width="1"/>
+            <path d="M133 125 L149 131" fill="none" stroke="#C8102E" stroke-width="4" stroke-linecap="round"/>
+            <path d="M134 143 L149 139" fill="none" stroke="#C8102E" stroke-width="4" stroke-linecap="round"/>
+            <ellipse cx="89" cy="74" rx="4" ry="6" fill="#EFC4A2" stroke="#E0AE89" stroke-width="1"/>
+            <ellipse cx="131" cy="74" rx="4" ry="6" fill="#EFC4A2" stroke="#E0AE89" stroke-width="1"/>
+            <path d="M90 72 Q90 47 110 47 Q130 47 130 72 Q130 89 119 98 Q114 103 110 103 Q106 103 101 98 Q90 89 90 72 Z" fill="#EFC4A2"/>
+            <path d="M90 70 Q86 46 110 45 Q134 46 130 70 Q126 58 110 57 Q96 57 88 66 Q86 67 90 70 Z" fill="#A87C4C"/>
+            <path d="M92 65 Q104 56 118 62 Q108 60 100 64 Z" fill="#8F663A"/>
+            <path d="M130 70 Q133 54 116 51 Q124 60 123 67 Z" fill="#8F663A"/>
+            <path d="M110 79 L107 90 Q110 93 113 90" fill="none" stroke="#D9A87F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M94 100 Q110 107 126 100" fill="none" stroke="#E0AE89" stroke-width="1.5" stroke-linecap="round"/>
+            <g id="face"></g>
+          </svg>
+        </div>
+        <div class="moodname" id="moodName">calm</div>
+        <div class="meter" aria-hidden="true"><div class="meter-fill" id="meterFill"></div></div>
+        <div class="meter-label"><span id="meterPct">80</span>% battery</div>
+      </div>
+      <div class="controls">
+        <p class="hint">Pick the one that fits right now:</p>
+        <div class="moodgrid" id="moodGrid"></div>
+        <div class="nudge"><b>How to meet me here:</b> <span id="nudgeText"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFECYCLE -->
+  <section>
+    <div class="sec-head">
+      <h2>The making of me</h2>
+      <p class="lead">Drag the years, or press play. Each stage unlocks a value or a coping trick I picked up along the way.</p>
+    </div>
+    <div class="card life">
+      <div class="life-controls">
+        <div class="age"><span id="ageNum">0</span><small>years</small></div>
+        <input type="range" id="ageSlider" min="0" max="33" value="0" aria-label="Age in years">
+        <button class="btn btn-primary" id="playBtn">Play my life</button>
+      </div>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <!-- MARATHON -->
+  <section id="marathonSec">
+    <div class="sec-head">
+      <h2>The marathon that broke me (literally)</h2>
+      <p class="lead">First competition of my life. I picked a full marathon. In Zürich. Trained on lunch breaks.</p>
+    </div>
+    <div class="card race">
+      <div class="race-stats">
+        <div class="rstat"><span class="rnum">57</span><span class="rlab">VO₂ max</span></div>
+        <div class="rstat"><span class="rnum">100+</span><span class="rlab">km / week</span></div>
+        <div class="rstat"><span class="rnum">1:28</span><span class="rlab">half split</span></div>
+        <div class="rstat"><span class="rnum">3:30</span><span class="rlab">finish time</span></div>
+      </div>
+      <div class="track-wrap">
+        <div class="track">
+          <div class="track-fill"></div>
+          <div class="marker" style="left:50%"></div>
+          <div class="marker hot" style="left:52%"></div>
+          <div class="runner" aria-hidden="true"></div>
+        </div>
+        <div class="track-labels">
+          <span style="left:0%">Start</span>
+          <span style="left:50%">Half · 1:28</span>
+          <span style="left:100%">42.2 km · 3:30</span>
+        </div>
+      </div>
+      <p class="race-note"><b>The twist:</b> what I brushed off as a niggle around km 22 was a stress fracture — too much mileage had quietly cracked the fibula in two places, no single misstep involved. Sub-3 was gone, so I jogged the final ~20 km on it and finished anyway, only finding out five days later at the doctor. Not advisable, not clever — but I finished.</p>
+      <button class="btn btn-ghost replay-btn" id="replayRace">↻ Replay the race</button>
+    </div>
+  </section>
+
+  <!-- DAMAGE REPORT -->
+  <section>
+    <div class="sec-head">
+      <h2>The damage report</h2>
+      <p class="lead">A partial list of bones I've tested to destruction. Still standing.</p>
+    </div>
+    <div class="card facts">
+      <div class="fact"><p class="k">Collarbone</p><p class="v">Broken at birth — got the injuries started nice and early.</p></div>
+      <div class="fact"><p class="k">Right big toe</p><p class="v">Age 10, a classmate dropped a table on it. No feeling there to this day.</p></div>
+      <div class="fact"><p class="k">Hand</p><p class="v">A high-school brawl at 15. Kept doing my paper round through it — the papers don't deliver themselves.</p></div>
+      <div class="fact"><p class="k">Rib &amp; shoulder</p><p class="v">Snowboarding — rib one trip, shoulder another. Both times I just finished the day on the mountain anyway.</p></div>
+      <div class="fact"><p class="k">Fibula</p><p class="v">A stress fracture, in two places, from too much running. Then I ran a marathon on it. Would (probably) not recommend.</p></div>
+    </div>
+  </section>
+
+  <!-- OUT OF OFFICE -->
+  <section>
+    <div class="sec-head">
+      <h2>Out of office</h2>
+      <p class="lead">If it's uncomfortable and outdoors, I'm probably in.</p>
+    </div>
+    <div class="card oo-grid">
+      <div class="oo">
+        <svg viewBox="0 0 220 140" role="img" aria-label="A cyclist riding through falling snow.">
+          <rect width="220" height="140" fill="#DCEAF2"/>
+          <path d="M0 98 L66 56 L128 98 Z" fill="#C4D9E4"/>
+          <path d="M86 98 L150 50 L220 98 Z" fill="#B4CEDB"/>
+          <rect y="98" width="220" height="42" fill="#EEF5F9"/>
+          <g stroke="#2E4A6B" stroke-width="2.5" fill="none" stroke-linecap="round">
+            <circle cx="80" cy="114" r="11"/><circle cx="118" cy="114" r="11"/>
+            <path d="M80 114 L102 114 L118 114"/><path d="M102 114 L98 98"/><path d="M118 114 L106 96"/><path d="M98 98 L90 98"/>
+          </g>
+          <path d="M98 98 L102 86" stroke="#2E4A6B" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="103" cy="82" r="5" fill="#EFC4A2"/>
+          <path d="M102 86 L106 96" stroke="#2E4A6B" stroke-width="3" stroke-linecap="round"/>
+          <g fill="#fff">
+            <circle class="snow" cx="24" cy="14" r="2.6" style="animation-duration:2.6s;animation-delay:0s"/>
+            <circle class="snow" cx="58" cy="10" r="2" style="animation-duration:3.1s;animation-delay:.6s"/>
+            <circle class="snow" cx="92" cy="16" r="2.4" style="animation-duration:2.3s;animation-delay:.3s"/>
+            <circle class="snow" cx="130" cy="9" r="2" style="animation-duration:3.4s;animation-delay:1s"/>
+            <circle class="snow" cx="160" cy="14" r="2.6" style="animation-duration:2.7s;animation-delay:.2s"/>
+            <circle class="snow" cx="188" cy="11" r="2.1" style="animation-duration:3s;animation-delay:.8s"/>
+            <circle class="snow" cx="44" cy="20" r="1.8" style="animation-duration:3.3s;animation-delay:1.2s"/>
+            <circle class="snow" cx="206" cy="18" r="1.8" style="animation-duration:2.5s;animation-delay:.5s"/>
+          </g>
+        </svg>
+        <div class="oo-cap"><h4>−14 °C, to Italy and back</h4><p>On a road bike, in winter. It made sense at the time.</p><span class="oo-tag">by bike</span></div>
+      </div>
+      <div class="oo">
+        <svg viewBox="0 0 220 140" role="img" aria-label="A trail climbing a mountain.">
+          <rect width="220" height="140" fill="#EAF1F4"/>
+          <circle class="sunpulse" cx="186" cy="30" r="14" fill="#F6C765"/>
+          <path d="M10 124 L108 34 L210 124 Z" fill="#9DBABE"/>
+          <path d="M92 56 L108 34 L126 58 L116 60 L108 50 L100 60 Z" fill="#ffffff"/>
+          <path d="M60 124 Q92 108 80 92 Q70 78 102 68 Q120 62 108 46" fill="none" stroke="#B0694C" stroke-width="2.5" stroke-dasharray="5 5" stroke-linecap="round"/>
+          <g class="climber"><circle cx="60" cy="120" r="4.5" fill="#C8102E"/></g>
+        </svg>
+        <div class="oo-cap"><h4>Bottom-to-top trail runs</h4><p>For fun. Flat routes are simply boring.</p><span class="oo-tag">+2000 m vert</span></div>
+      </div>
+      <div class="oo">
+        <svg viewBox="0 0 220 140" role="img" aria-label="Snowy Himalayan peaks with prayer flags.">
+          <rect width="220" height="140" fill="#DDEAF0"/>
+          <path d="M0 124 L48 72 L96 124 Z" fill="#A9C2C6"/>
+          <path d="M70 124 L130 40 L196 124 Z" fill="#90AAAF"/>
+          <path d="M210 124 L168 76 L220 76 L220 124 Z" fill="#A9C2C6"/>
+          <path d="M112 64 L130 40 L150 66 L138 68 L130 54 L122 68 Z" fill="#ffffff"/>
+          <path d="M30 92 L48 72 L66 94 L56 94 L48 84 L40 94 Z" fill="#ffffff"/>
+          <g class="pflags">
+            <path d="M12 36 Q60 26 116 42" fill="none" stroke="#3A4A56" stroke-width="1"/>
+            <path d="M24 33 l10 1 l-1 9 z" fill="#3C6E8F"/>
+            <path d="M40 34 l10 1 l-1 9 z" fill="#FFFFFF"/>
+            <path d="M56 36 l10 1 l-1 9 z" fill="#C8102E"/>
+            <path d="M72 38 l10 1 l-1 9 z" fill="#4E9A5B"/>
+            <path d="M88 40 l10 1 l-1 9 z" fill="#E0A93C"/>
+          </g>
+        </svg>
+        <div class="oo-cap"><h4>Everest Base Camp</h4><p>On foot. My number one for nature, tied with Namibia.</p><span class="oo-tag">5,364 m</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLUBS -->
+  <section>
+    <div class="sec-head">
+      <h2>On the terraces</h2>
+      <p class="lead">Where my football loyalties live. Feyenoord is not up for discussion.</p>
+    </div>
+    <div class="card clubs">
+      <div class="club club-home">
+        <svg viewBox="0 0 80 100" class="crest" role="img" aria-label="Feyenoord supporter badge in red and white.">
+          <defs><clipPath id="cFey"><path d="M10 10 H70 V54 Q70 82 40 93 Q10 82 10 54 Z"/></clipPath></defs>
+          <g clip-path="url(#cFey)"><rect width="40" height="100" fill="#E30613"/><rect x="40" width="40" height="100" fill="#FFFFFF"/></g>
+          <path d="M10 10 H70 V54 Q70 82 40 93 Q10 82 10 54 Z" fill="none" stroke="#111111" stroke-width="3"/>
+          <text x="40" y="58" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="700" font-size="30" fill="#111111">F</text>
+        </svg>
+        <div class="club-body"><h4>Feyenoord <span class="star">★</span></h4><p>Rotterdam, my one true club. Loud, red-and-white, all heart.</p></div>
+      </div>
+      <div class="club">
+        <svg viewBox="0 0 80 100" class="crest" role="img" aria-label="Paris supporter badge in navy and red.">
+          <defs><clipPath id="cPsg"><path d="M10 10 H70 V54 Q70 82 40 93 Q10 82 10 54 Z"/></clipPath></defs>
+          <g clip-path="url(#cPsg)"><rect width="80" height="100" fill="#0B2240"/><rect x="36" width="8" height="100" fill="#C8102E"/><rect x="32" width="4" height="100" fill="#FFFFFF"/><rect x="44" width="4" height="100" fill="#FFFFFF"/></g>
+          <path d="M10 10 H70 V54 Q70 82 40 93 Q10 82 10 54 Z" fill="none" stroke="#0B2240" stroke-width="3"/>
+          <text x="40" y="58" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="700" font-size="26" fill="#FFFFFF">P</text>
+        </svg>
+        <div class="club-body"><h4>Paris SG</h4><p>Picked up during the Paris year — many nights at the Parc.</p></div>
+      </div>
+      <div class="club">
+        <svg viewBox="0 0 80 100" class="crest" role="img" aria-label="Fulham supporter badge in white and black.">
+          <defs><clipPath id="cFul"><path d="M10 10 H70 V54 Q70 82 40 93 Q10 82 10 54 Z"/></clipPath></defs>
+          <g clip-path="url(#cFul)"><rect width="80" height="100" fill="#FFFFFF"/><rect y="44" width="80" height="6" fill="#111111"/></g>
+          <path d="M10 10 H70 V54 Q70 82 40 93 Q10 82 10 54 Z" fill="none" stroke="#111111" stroke-width="3.5"/>
+          <text x="40" y="40" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="700" font-size="26" fill="#C8102E">F</text>
+        </svg>
+        <div class="club-body"><h4>Fulham</h4><p>My London club. Settled on the Cottagers in the end.</p></div>
+      </div>
+      <div class="club">
+        <div class="club-flags"><span class="fi fi-nl"></span><span class="fi fi-at"></span></div>
+        <div class="club-body"><h4>World Cup: both</h4><p>Dutch heart, Austrian half — I cheer for the two of them every tournament.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PASSPORT -->
+  <section>
+    <div class="sec-head">
+      <h2>Where I've been</h2>
+      <p class="lead">Travel is half my personality. Here's the passport so far — more pages pending.</p>
+    </div>
+    <div class="card passport">
+      <div class="bignum"><span id="countryCount">0</span> <small>countries &amp; counting</small></div>
+      <div class="globe-wrap">
+        <div class="globe-col" id="globeCol">
+          <svg id="globe" viewBox="0 0 300 300" role="img" aria-label="A rotating globe with visited countries highlighted in orange."></svg>
+          <p class="globe-note">Auto-rotating — drag to spin it yourself. Visited countries in orange.</p>
+        </div>
+        <div class="table-col">
+          <table class="counts">
+            <thead><tr><th>Region</th><th>Countries</th></tr></thead>
+            <tbody id="countsBody"></tbody>
+            <tfoot><tr><th>Total</th><th id="countsTotal">0</th></tr></tfoot>
+          </table>
+        </div>
+      </div>
+      <div id="passport"></div>
+      <p class="usa-note">Conspicuously absent: <span class="fi fi-us"></span> the USA. Never been — and after Iran and a few others on this list, that's now officially a visa conversation. (The ESTA route says no.)</p>
+    </div>
+    <div class="card recs">
+      <div class="recs-head"><h3>Where I'd send you</h3><p>Hard-won favourites from the road.</p></div>
+      <div class="recs-grid">
+        <div class="rec"><div class="rec-flag"><span class="fi fi-ir"></span></div><div class="rec-body"><h4>Iran <span class="star">★</span></h4><p>The nicest people I've met anywhere. Full stop.</p></div></div>
+        <div class="rec"><div class="rec-flag"><span class="fi fi-cn"></span></div><div class="rec-body"><h4>China <span class="star">★</span></h4><p>Best food on Earth, and tech from the future.</p></div></div>
+        <div class="rec"><div class="rec-flag"><span class="fi fi-np"></span></div><div class="rec-body"><h4>Nepal <span class="star">★</span></h4><p>Everest Base Camp on foot — my number one for raw nature.</p></div></div>
+        <div class="rec"><div class="rec-flag"><span class="fi fi-na"></span></div><div class="rec-body"><h4>Namibia <span class="star">★</span></h4><p>The other number one. Vast, silent, otherworldly.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOOD TO KNOW -->
+  <section>
+    <div class="sec-head">
+      <h2>Good to know</h2>
+      <p class="lead">The small, true things that make me me.</p>
+    </div>
+    <div class="card gtk">
+      <div class="tabs" id="gtkTabs">
+        <button class="tab active" data-cat="all">All</button>
+        <button class="tab" data-cat="work">🤝 Work</button>
+        <button class="tab" data-cat="sport">🏃 Sport</button>
+        <button class="tab" data-cat="food">🍽️ Food</button>
+        <button class="tab" data-cat="life">🌍 Life</button>
+      </div>
+      <div class="facts" id="gtkGrid">
+        <div class="fact" data-cat="work"><p class="k">🧭 Direct, in a Dutch way</p><p class="v">It's about efficiency and the right answer — never personal. Push back, bring data, change my mind.</p></div>
+        <div class="fact" data-cat="work"><p class="k">📈 Self-improvement is the whole game</p><p class="v">My number-one love. Always trying to get a little better at something.</p></div>
+        <div class="fact" data-cat="work"><p class="k">🧠 Friends outside consulting</p><p class="v">Partly shared hobbies, partly to keep hearing genuinely different viewpoints — doctors, architects, people who think in completely different ways.</p></div>
+        <div class="fact" data-cat="work"><p class="k">🎯 Meetings, not "chats"</p><p class="v">Allergic to vague office drop-ins. Give me a goal-focused meeting or a relaxed team dinner.</p></div>
+        <div class="fact" data-cat="work"><p class="k">🏨 Business-trip golden rule</p><p class="v">Sleep early, run first thing, then quietly demolish the all-inclusive buffet that's already been paid for. You're welcome.</p></div>
+        <div class="fact" data-cat="work"><p class="k">😴 No drinking at work events</p><p class="v">Training reasons — and I love my sleep far too much to trade it.</p></div>
+        <div class="fact" data-cat="sport"><p class="k">🚴 Giro d'Italia, every year</p><p class="v">Watch the pros with my girlfriend, then ride the same roads ourselves. The most relaxed week of the year — and the eating is a sport of its own.</p></div>
+        <div class="fact" data-cat="sport"><p class="k">🚵 Real MVP: Mathieu van der Poel</p><p class="v">Keep your Verstappen. The Dutchman who matters rides a bike — MVDP, all day.</p></div>
+        <div class="fact" data-cat="sport"><p class="k">🎄 24.12 km every 24 December</p><p class="v">A Christmas-morning ritual that earns a genuinely heroic dinner the night before.</p></div>
+        <div class="fact" data-cat="food"><p class="k"><span class="fi fi-br"></span> Brazil, often</p><p class="v">My girlfriend's home, so I'm there a lot. Açaí and churrasco are strictly non-negotiable.</p></div>
+        <div class="fact" data-cat="food"><p class="k">☕ Two coffees a day, max</p><p class="v">And still, somehow, no espresso machine. A classic thirty-something contradiction.</p></div>
+        <div class="fact" data-cat="food"><p class="k">🧀 Gouda is the best cheese</p><p class="v">Not really up for debate, but I'll hear you out.</p></div>
+        <div class="fact" data-cat="food"><p class="k">🍽️ Amateur restaurant critics</p><p class="v">My girlfriend and I judge every place we eat, for sport. Scores may be issued.</p></div>
+        <div class="fact" data-cat="life"><p class="k">🛖 A mountain hut I keep up myself</p><p class="v">Scything the grass by hand, improving the structure bit by bit. Turns out I'm a closet handyman.</p></div>
+        <div class="fact" data-cat="life"><p class="k">🗣️ Three native languages</p><p class="v">Dutch, German, English. My French got rusty despite Paris and Société Générale.</p></div>
+        <div class="fact" data-cat="life"><p class="k">🏔️ Two homes for the heart</p><p class="v">Tyrol and Limburg — mountains on one side, the warm south on the other.</p></div>
+        <div class="fact" data-cat="life"><p class="k">🚗 Daily driver: BMW 4 Series Gran Coupé</p><p class="v">Comfortable miles between the bikes and the mountains.</p></div>
+        <div class="fact" data-cat="life"><p class="k">🐶 Nutella, my Pomeranian</p><p class="v">Trained to eat only Gouda cheese. Impeccable taste — clearly learned from the best.</p></div>
+        <div class="fact" data-cat="life"><p class="k">♟️ Chess: ~1000 elo, 19,000 games</p><p class="v">Enthusiasm comfortably ahead of skill. Find me on chess.com.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOUNDTRACK -->
+  <section>
+    <div class="sec-head">
+      <h2>On repeat</h2>
+      <p class="lead">Fuel for focus, long runs, and longer rides.</p>
+    </div>
+    <div class="card sound">
+      <div class="eq" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="sound-txt">
+        <h3>Trance, always</h3>
+        <p>Aly &amp; Fila, John O'Callaghan and Factor B on heavy rotation. I'm Dutch — uplifting trance is basically heritage. 138 BPM is a perfectly reasonable resting heart rate.</p>
+        <button class="play-btn" id="playSound" aria-pressed="false"><span class="play-ico">▶</span><span id="playLabel">Play a 138 BPM loop</span></button>
+        <p class="play-note">An original trance-style loop, generated live in your browser — not the real tracks (those belong to the artists, not me).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUTURE -->
+  <section>
+    <div class="sec-head">
+      <h2>What's next</h2>
+      <p class="lead">More of the good stuff — and a challenge that finally fits.</p>
+    </div>
+    <div class="card facts future">
+      <div class="fact"><p class="k">🌍 More stamps</p><p class="v">Deeper into South America, back to Japan, and the 'stans. (USA visa drama permitting.)</p></div>
+      <div class="fact"><p class="k">🏔️ More vertical</p><p class="v">Longer trails, bigger cols, and the mountain hut fully renovated by my own hand.</p></div>
+      <div class="fact"><p class="k">🚴 More Giro</p><p class="v">Same ritual with my girlfriend — more roads, more pros, considerably more pasta.</p></div>
+      <div class="fact"><p class="k">🏡 Home &amp; the good life</p><p class="v">Keep building on the house and the quiet, good days that go with it.</p></div>
+      <div class="fact"><p class="k">🧗 A role that uses the whole toolkit</p><p class="v">Finance brain, data hands, endurance for the long projects — the next challenge that genuinely stretches all of it.</p></div>
+      <div class="fact"><p class="k">🏅 And, maybe, finally…</p><p class="v">…that title. We live in hope — and keep the sense of humour either way.</p></div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section>
+    <div class="sec-head">
+      <h2>How to brighten my mood</h2>
+      <p class="lead">Five quick taps. You'll get a short, honest cheat sheet for working well with me — direct, like me.</p>
+    </div>
+    <div class="card quiz">
+      <div id="quizBody"></div>
+      <button class="btn btn-primary" id="resultBtn">Show my cheat sheet</button>
+      <div class="result" id="result" aria-live="polite">
+        <h3 id="resTitle"></h3>
+        <div class="match" id="resMatch"></div>
+        <p id="resBlurb"></p>
+        <ul id="resTips"></ul>
+        <div class="row">
+          <button class="btn btn-ghost" id="copyBtn">Copy my result</button>
+          <button class="btn btn-ghost" id="retakeBtn">Start over</button>
+          <span class="toast" id="toast">Copied — paste it anywhere</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Made with care · brighten someone's day today</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson-client/3.1.0/topojson-client.min.js"></script>
+<script>
+// ---------- MOODS ----------
+const FACES = {
+  calm:`<path d="M97 71 Q102 68 107 71" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M113 71 Q118 68 123 71" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="102" cy="77" rx="5" ry="3.4" fill="#fff"/><ellipse cx="118" cy="77" rx="5" ry="3.4" fill="#fff"/><circle cx="102" cy="77" r="2.6" fill="#6B4A2E"/><circle cx="118" cy="77" r="2.6" fill="#6B4A2E"/><circle cx="102" cy="77" r="1" fill="#23170E"/><circle cx="118" cy="77" r="1" fill="#23170E"/><path d="M100 97 Q110 102 120 97" fill="none" stroke="#B0694C" stroke-width="2.5" stroke-linecap="round"/>`,
+  focused:`<path d="M96 70 L107 73" fill="none" stroke="#8A6238" stroke-width="3" stroke-linecap="round"/><path d="M124 70 L113 73" fill="none" stroke="#8A6238" stroke-width="3" stroke-linecap="round"/><path d="M110 67 L110 72" fill="none" stroke="#8A6238" stroke-width="1.4" stroke-linecap="round"/><ellipse cx="102" cy="78" rx="4.4" ry="2.6" fill="#fff"/><ellipse cx="118" cy="78" rx="4.4" ry="2.6" fill="#fff"/><circle cx="102" cy="78" r="2.3" fill="#6B4A2E"/><circle cx="118" cy="78" r="2.3" fill="#6B4A2E"/><path d="M101 99 H119" fill="none" stroke="#B0694C" stroke-width="2.5" stroke-linecap="round"/>`,
+  stressed:`<path d="M96 73 L107 68" fill="none" stroke="#8A6238" stroke-width="2.6" stroke-linecap="round"/><path d="M124 73 L113 68" fill="none" stroke="#8A6238" stroke-width="2.6" stroke-linecap="round"/><ellipse cx="102" cy="77" rx="5.4" ry="4.2" fill="#fff"/><ellipse cx="118" cy="77" rx="5.4" ry="4.2" fill="#fff"/><circle cx="102" cy="77" r="2.4" fill="#6B4A2E"/><circle cx="118" cy="77" r="2.4" fill="#6B4A2E"/><path d="M101 100 Q105 97 110 100 Q115 103 119 100" fill="none" stroke="#B0694C" stroke-width="2" stroke-linecap="round"/><path d="M129 64 Q126 71 129 73 Q132 71 129 64 Z" fill="#8FC0DE"/>`,
+  tired:`<path d="M97 72 Q102 74 107 72" fill="none" stroke="#8A6238" stroke-width="2.2" stroke-linecap="round"/><path d="M113 72 Q118 74 123 72" fill="none" stroke="#8A6238" stroke-width="2.2" stroke-linecap="round"/><path d="M97 78 Q102 81 107 78" fill="none" stroke="#3A4A56" stroke-width="2.4" stroke-linecap="round"/><path d="M113 78 Q118 81 123 78" fill="none" stroke="#3A4A56" stroke-width="2.4" stroke-linecap="round"/><path d="M98 83 Q102 84 106 83" fill="none" stroke="#CFA07C" stroke-width="1" stroke-linecap="round"/><path d="M114 83 Q118 84 122 83" fill="none" stroke="#CFA07C" stroke-width="1" stroke-linecap="round"/><path d="M102 100 Q110 98 118 100" fill="none" stroke="#B0694C" stroke-width="2.4" stroke-linecap="round"/>`,
+  "post-workout":`<ellipse cx="97" cy="90" rx="5" ry="3" fill="#E2604C" opacity="0.5"/><ellipse cx="123" cy="90" rx="5" ry="3" fill="#E2604C" opacity="0.5"/><path d="M97 70 Q102 67 107 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M113 70 Q118 67 123 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="102" cy="77" rx="4.5" ry="3" fill="#fff"/><ellipse cx="118" cy="77" rx="4.5" ry="3" fill="#fff"/><circle cx="102" cy="77" r="2.4" fill="#6B4A2E"/><circle cx="118" cy="77" r="2.4" fill="#6B4A2E"/><ellipse cx="110" cy="100" rx="6" ry="4.5" fill="#9A4334"/><path d="M104 98 Q110 101 116 98" fill="none" stroke="#B0694C" stroke-width="1.6" stroke-linecap="round"/><path d="M127 63 Q124 70 127 72 Q130 70 127 63 Z" fill="#8FC0DE"/><path d="M100 56 Q98 60 100 61 Q102 60 100 56 Z" fill="#8FC0DE"/>`,
+  friday:`<path d="M97 70 Q102 67 107 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M113 70 Q118 67 123 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M97 78 Q102 81 107 78" fill="none" stroke="#6B4A2E" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="118" cy="77" rx="5" ry="3.4" fill="#fff"/><circle cx="118" cy="77" r="2.6" fill="#6B4A2E"/><circle cx="118" cy="77" r="1" fill="#23170E"/><path d="M99 96 Q110 105 121 96" fill="none" stroke="#B0694C" stroke-width="2.6" stroke-linecap="round"/><path d="M128 58 L128 64 M125 61 L131 61" fill="none" stroke="#E0A93C" stroke-width="1.4" stroke-linecap="round"/>`,
+  happy:`<ellipse cx="97" cy="90" rx="4.5" ry="3" fill="#E89B7A" opacity="0.55"/><ellipse cx="123" cy="90" rx="4.5" ry="3" fill="#E89B7A" opacity="0.55"/><path d="M97 70 Q102 67 107 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M113 70 Q118 67 123 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M97 79 Q102 75 107 79" fill="none" stroke="#6B4A2E" stroke-width="2.4" stroke-linecap="round"/><path d="M113 79 Q118 75 123 79" fill="none" stroke="#6B4A2E" stroke-width="2.4" stroke-linecap="round"/><path d="M100 97 Q110 104 120 97" fill="none" stroke="#B0694C" stroke-width="2.6" stroke-linecap="round"/>`,
+  demotivated:`<path d="M97 72 Q102 73 107 72" fill="none" stroke="#8A6238" stroke-width="2.2" stroke-linecap="round"/><path d="M113 72 Q118 73 123 72" fill="none" stroke="#8A6238" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="102" cy="78" rx="4.6" ry="3" fill="#fff"/><ellipse cx="118" cy="78" rx="4.6" ry="3" fill="#fff"/><circle cx="102" cy="79" r="2.3" fill="#6B4A2E"/><circle cx="118" cy="79" r="2.3" fill="#6B4A2E"/><path d="M101 101 Q110 97 119 101" fill="none" stroke="#B0694C" stroke-width="2.4" stroke-linecap="round"/>`
+};
+const HEAD_BASE=`<ellipse cx="89" cy="74" rx="4" ry="6" fill="#EFC4A2" stroke="#E0AE89" stroke-width="1"/><ellipse cx="131" cy="74" rx="4" ry="6" fill="#EFC4A2" stroke="#E0AE89" stroke-width="1"/><path d="M90 72 Q90 47 110 47 Q130 47 130 72 Q130 89 119 98 Q114 103 110 103 Q106 103 101 98 Q90 89 90 72 Z" fill="#EFC4A2"/><path d="M90 70 Q86 46 110 45 Q134 46 130 70 Q126 58 110 57 Q96 57 88 66 Q86 67 90 70 Z" fill="#A87C4C"/><path d="M92 65 Q104 56 118 62 Q108 60 100 64 Z" fill="#8F663A"/><path d="M130 70 Q133 54 116 51 Q124 60 123 67 Z" fill="#8F663A"/><path d="M110 79 L107 90 Q110 93 113 90" fill="none" stroke="#D9A87F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M94 100 Q110 107 126 100" fill="none" stroke="#E0AE89" stroke-width="1.5" stroke-linecap="round"/>`;
+function miniHead(mood){return `<svg viewBox="84 43 52 64" xmlns="http://www.w3.org/2000/svg">${HEAD_BASE}${FACES[mood]||FACES.calm}</svg>`;}
+
+const MOODS = [
+  {key:"calm",     battery:80, color:"#3C6E8F", anim:"anim-bob",    nudge:"All good here. A quick hello or a spontaneous coffee invite is always welcome."},
+  {key:"focused",  battery:65, color:"#28324C", anim:"anim-still",  nudge:"Deep work in progress. Drop me a message and I'll come back to you — instant replies aren't happening."},
+  {key:"stressed", battery:30, color:"#C8102E", anim:"anim-shake",  nudge:"A little underwater. The kindest help right now is one clear priority and a few minutes of quiet."},
+  {key:"tired",    battery:20, color:"#7C8A99", anim:"anim-slump",  nudge:"Running low. A short walk, some water, and please — no big decisions until I've recharged."},
+  {key:"demotivated",battery:35,color:"#6E7E92",anim:"anim-bob",    nudge:"Not my usual fire right now — motivation took a knock lately. What helps: a hard training session, time with people I actually rate, and remembering this is a dip, not a verdict. Be patient with me; I bounce back."},
+  {key:"post-workout",battery:92,color:"#F5821F",anim:"anim-breathe",nudge:"Endorphins online. Perfect moment to bring me a tricky problem — I'm warmed up and game."},
+  {key:"friday",   battery:78, color:"#E0A93C", anim:"anim-sway",   nudge:"Wind-down mode. Light topics, a laugh, and let's save the heavy stuff for Monday."},
+  {key:"happy",    battery:100,color:"#4E9A5B", anim:"anim-bounce", nudge:"Full battery. Happy to help, brainstorm, or just chat about your weekend."}
+];
+
+const face=document.getElementById('face');
+const wrap=document.getElementById('avatarWrap');
+const moodName=document.getElementById('moodName');
+const meterFill=document.getElementById('meterFill');
+const meterPct=document.getElementById('meterPct');
+const nudgeText=document.getElementById('nudgeText');
+const grid=document.getElementById('moodGrid');
+
+function setMood(m){
+  face.innerHTML=FACES[m.key];
+  moodName.textContent=m.key.replace('-',' ');
+  meterFill.style.width=m.battery+"%";
+  meterFill.style.background=m.color;
+  meterPct.textContent=m.battery;
+  nudgeText.textContent=m.nudge;
+  wrap.className="avatar "+m.anim;
+  [...grid.children].forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===m.key));
+}
+MOODS.forEach(m=>{
+  const b=document.createElement('button');
+  b.className="mood-btn"; b.dataset.k=m.key; b.setAttribute('aria-pressed','false');
+  b.innerHTML=`<span class="btn-ava" style="border-color:${m.color}">${miniHead(m.key)}</span>${m.key.replace('-',' ')}`;
+  b.onclick=()=>setMood(m);
+  grid.appendChild(b);
+});
+setMood(MOODS.find(m=>m.key==="demotivated")||MOODS[0]);
+
+// ---------- LIFECYCLE ----------
+const STAGES=[
+  {age:0, i:"👶", t:"Born in the Netherlands", n:"Dutch dad, Austrian mum, raised in Limburg. Rest came standard, batteries included."},
+  {age:3, i:"🏊", t:"First sport: swimming", n:"In the pool until age six, before the pitch came calling."},
+  {age:6, i:"⚽", t:"FC Hoensbroek, last man back", n:"Joined FC Hoensbroek as the last defender — the calm one who reads the game and cleans up. Basically lived on the pitch."},
+  {age:14,i:"🗞️", t:"First job: paper round", n:"Delivering newspapers before school — my first wage at 14. Kept the round going even with a broken hand at 15; the papers don't deliver themselves."},
+  {age:15,i:"👟", t:"Hung up the boots", n:"Stopped club football at 15. Would I have gone pro, like (obviously) every single one of my friends? We'll sadly never know. Kept moving regardless — gym, running, anything outdoors."},
+  {age:16,i:"🛒", t:"Supermarket shifts", n:"Shelves and tills at 16. There was always a job on the side."},
+  {age:18,i:"🎓", t:"Rotterdam — bachelor begins", n:"International Business Administration at Rotterdam School of Management (2011)."},
+  {age:18,i:"💪", t:"Waiter & gym instructor", n:"Through uni: waiting tables and coaching at the university gym. Never really not working."},
+  {age:20,i:"🏅", t:"Cum laude, in two years", n:"Finished the bachelor early and with honours (2013). Onwards."},
+  {age:21,i:"🗼", t:"Paris — Catalina Marketing", n:"Data scientist on consumer spend and pricing for Carrefour and P&G. Football with colleagues, runs, and many nights watching PSG (2014)."},
+  {age:22,i:"🏦", t:"Back to Rotterdam, then London", n:"Master's in Finance & Investment (done June 2015), then DCM origination for Benelux & DACH at Société Générale (2015). Loved the work and the deals; the crowd ran on espresso and adrenaline. Adopted Fulham."},
+  {age:25,i:"❤️", t:"Met my girlfriend", n:"2018. Brazilian, brilliant, and far too patient with me. Easily the best entry on this whole timeline."},
+  {age:25,i:"📜", t:"Passed the CFA", n:"Also 2018. Three exams that ate every spare brain cell I had outside of work — no regrets, slightly fewer hobbies for a while."},
+  {age:26,i:"🗻", t:"Everest Base Camp", n:"Walked to 5,364 m through the Khumbu. Tied with Namibia as my number one for nature."},
+  {age:27,i:"🏔️", t:"Zürich, mid-lockdown", n:"Joined Accenture Zürich in March 2020 — they actually tried to cancel the contract first. Survived. The bikes and the Alps made it more than worth it."},
+  {age:30,i:"🏃", t:"First race ever: a marathon", n:"My debut competition? A full marathon, in Zürich, off training squeezed into lunch breaks. It did not go to plan — gloriously so. See the next section."},
+  {age:33,i:"😄", t:"Still officially 'Consultant'", n:"Cum laude, a master's, the CFA, a global bank, data science in Paris — and the title has heroically survived every single review. Honestly? At this point it's just funny. The real headline: the colleagues who've backed me cycle after cycle. You lot are the reason I keep showing up grinning."},
+  {age:33,i:"🏡", t:"Current build", n:"A house, a loving girlfriend, two carbon bikes, one gouda-only Pomeranian (Nutella), snowboarding, running, and a permanent itch to get better at things. Life, frankly, is good."}
+];
+const tl=document.getElementById('timeline');
+STAGES.forEach((s,i)=>{
+  const el=document.createElement('div'); el.className="tl-item"; el.dataset.age=s.age;
+  el.innerHTML=`<div class="tl-rail"><div class="tl-node">${s.i||""}</div><div class="tl-line"></div></div>
+    <div class="tl-body"><div class="tl-age">age ${s.age}</div><h4>${s.t}</h4><p>${s.n}</p></div>`;
+  tl.appendChild(el);
+});
+const slider=document.getElementById('ageSlider');
+const ageNum=document.getElementById('ageNum');
+function renderAge(v){
+  ageNum.textContent=v;
+  [...tl.children].forEach(it=>it.classList.toggle('show', +it.dataset.age<=v));
+}
+slider.addEventListener('input',e=>renderAge(+e.target.value));
+renderAge(0);
+
+let playing=null;
+const playBtn=document.getElementById('playBtn');
+playBtn.addEventListener('click',()=>{
+  if(playing){clearInterval(playing);playing=null;playBtn.textContent="Play my life";return;}
+  let v=0; slider.value=0; renderAge(0); playBtn.textContent="Pause";
+  playing=setInterval(()=>{
+    v++; if(v>33){clearInterval(playing);playing=null;playBtn.textContent="Replay my life";return;}
+    slider.value=v; renderAge(v);
+  },220);
+});
+
+// ---------- PASSPORT ----------
+const PASSPORT={
+  Europe:["Netherlands","Belgium","Luxembourg","France","Spain","Portugal","Sweden","Poland","Russia","Scotland","England","Ireland","Germany","Austria","Liechtenstein","Hungary","Czechia","Slovakia","Slovenia","Croatia","Montenegro","Albania","Bosnia","Italy","San Marino","Switzerland","Latvia","Estonia","Turkey","Ukraine","Romania","Greece","Serbia"],
+  Asia:["Iran","Nepal","India","UAE","Laos","Cambodia","Thailand","Vietnam","Kazakhstan","China","Japan"],
+  Africa:["Namibia","South Africa","Tanzania","Kenya","Morocco","Mauritius"],
+  Americas:["Brazil","Argentina","Uruguay","Colombia","Mexico","Paraguay"]
+};
+const CODES={Netherlands:"nl",Belgium:"be",Luxembourg:"lu",France:"fr",Spain:"es",Portugal:"pt",Sweden:"se",Poland:"pl",Russia:"ru",Scotland:"gb-sct",England:"gb-eng",Ireland:"ie",Germany:"de",Austria:"at",Liechtenstein:"li",Hungary:"hu",Czechia:"cz",Slovakia:"sk",Slovenia:"si",Croatia:"hr",Montenegro:"me",Albania:"al",Bosnia:"ba",Italy:"it","San Marino":"sm",Switzerland:"ch",Latvia:"lv",Estonia:"ee",Turkey:"tr",Ukraine:"ua",Romania:"ro",Greece:"gr",Serbia:"rs",Iran:"ir",Nepal:"np",India:"in",UAE:"ae",Laos:"la",Cambodia:"kh",Thailand:"th",Vietnam:"vn",Kazakhstan:"kz",China:"cn",Japan:"jp",Namibia:"na","South Africa":"za",Tanzania:"tz",Kenya:"ke",Morocco:"ma",Mauritius:"mu",Brazil:"br",Argentina:"ar",Uruguay:"uy",Colombia:"co",Mexico:"mx",Paraguay:"py"};
+const pp=document.getElementById('passport');
+let total=0;
+for(const region in PASSPORT){
+  total+=PASSPORT[region].length;
+  const g=document.createElement('div'); g.className="group";
+  g.innerHTML=`<h4>${region} · ${PASSPORT[region].length}</h4>`;
+  const chips=document.createElement('div'); chips.className="chips";
+  PASSPORT[region].forEach((c,idx)=>{const s=document.createElement('span');s.className="chip";const code=CODES[c];s.innerHTML=(code?'<span class="fi fi-'+code+'"></span> ':'')+c;s.style.animationDelay=(idx*0.025)+'s';chips.appendChild(s);});
+  g.appendChild(chips); pp.appendChild(g);
+}
+const cb=document.getElementById('countsBody');
+for(const region in PASSPORT){ const tr=document.createElement('tr'); tr.innerHTML='<td>'+region+'</td><td>'+PASSPORT[region].length+'</td>'; cb.appendChild(tr); }
+document.getElementById('countsTotal').textContent=total;
+const cc=document.getElementById('countryCount');
+let n=0; const step=Math.max(1,Math.ceil(total/30));
+const ci=setInterval(()=>{n=Math.min(total,n+step);cc.textContent=n;if(n>=total)clearInterval(ci);},28);
+
+// ---------- QUIZ ----------
+const QUESTIONS=[
+  {q:"When you bring me work, it's usually…",
+   a:[["🎯 a sharp, specific question","direct"],["🧩 a tricky problem to crack together","spar"],["🏃 an idea hatched on a run or ride","move"],["🌍 a story from somewhere you've been","adv"]]},
+  {q:"Best way to win me over in a debate?",
+   a:[["📊 data and airtight logic","spar"],["⚡ get to the point, fast, no fluff","direct"],["🔭 a viewpoint I hadn't considered","spar"],["🙃 agree with me and manage upward","optics"]]},
+  {q:"To genuinely brighten my day…",
+   a:[["🏃 a lunch run or a ride","move"],["🎧 a great trance track","adv"],["🧠 a genuinely hard problem","spar"],["🍽️ a restaurant worth judging","adv"]]},
+  {q:"Your working style is…",
+   a:[["⚡ direct and fast","direct"],["🔬 analytical and rigorous","spar"],["💪 energetic, always moving","move"],["🤳 relationship-first, big on optics","optics"]]},
+  {q:"Your idea of a good work trip?",
+   a:[["🌅 early night, morning run, then the buffet","move"],["✅ get the work done, properly","direct"],["🗺️ new city, great food, explore","adv"],["🥂 be seen, work the room","optics"]]}
+];
+const RESULTS={
+  direct:{title:"The Straight Shooter",match:"high compatibility",blurb:"No fluff, no games — you say what you mean and get to the point. We're going to get on famously.",
+    tips:["Lead with the ask and the why; I'll respond fast.","Bullet points over backstory — spare me the throat-clearing.","Tell me when I'm wrong, plainly. I'd genuinely rather know."]},
+  spar:{title:"The Sparring Partner",match:"top-tier compatibility",blurb:"Bring me hard problems and stronger arguments. Critical thinking is the whole game for me.",
+    tips:["Bring the difficult problem, not the vague worry — be specific.","Disagree with data; changing my mind is a feature, not a fight.","Rigour earns my respect far faster than agreement."]},
+  move:{title:"The Training Partner",match:"strong compatibility",blurb:"You get it: movement is my reset button. A run beats a meeting most days of the week.",
+    tips:["Pull me into a lunch run or a ride — best reset there is.","Pitch ideas while we move; I think better on the go.","On work trips: early night, morning run, then we hit the buffet."]},
+  adv:{title:"The Fellow Adventurer",match:"surprisingly high compatibility",blurb:"Travel, trance, food worth arguing about — you speak my off-hours language fluently.",
+    tips:["Ask about Iran or China and happily lose an hour.","Share music and trip ideas freely; I'll do the same.","Bonus points for mountains, trails, and genuinely great food."]},
+  optics:{title:"The Optics Player",match:"opposites — but workable",blurb:"Ah, the smooth operator: great in the room, fluent in managing upward, the coffee for the boss always on time. We're not natural twins — substance is my love language — but you're very winnable. Lead with what you actually built and we'll get on just fine.",
+    tips:["Open with what you delivered, not who you charmed.","Substance first; the optics tend to look after themselves.","Bring me one properly solved problem and I'm sold."]}
+};
+const answers={};
+const qBody=document.getElementById('quizBody');
+QUESTIONS.forEach((item,qi)=>{
+  const wrapEl=document.createElement('div'); wrapEl.className="q";
+  wrapEl.innerHTML=`<p>${qi+1}. ${item.q}</p>`;
+  const opts=document.createElement('div'); opts.className="opts";
+  item.a.forEach(([label,val])=>{
+    const o=document.createElement('button'); o.className="opt"; o.textContent=label;
+    o.setAttribute('aria-pressed','false');
+    o.onclick=()=>{
+      answers[qi]={label,val};
+      [...opts.children].forEach(c=>c.setAttribute('aria-pressed','false'));
+      o.setAttribute('aria-pressed','true');
+    };
+    opts.appendChild(o);
+  });
+  wrapEl.appendChild(opts); qBody.appendChild(wrapEl);
+});
+
+const resultBox=document.getElementById('result');
+document.getElementById('resultBtn').addEventListener('click',()=>{
+  if(Object.keys(answers).length<QUESTIONS.length){
+    alert("Pick one option for each question first.");return;
+  }
+  const score={}; Object.values(answers).forEach(a=>{score[a.val]=(score[a.val]||0)+1;});
+  const key=Object.keys(score).sort((a,b)=>score[b]-score[a])[0];
+  const r=RESULTS[key];
+  document.getElementById('resTitle').textContent="You're "+r.title;
+  document.getElementById('resMatch').textContent=r.match;
+  document.getElementById('resBlurb').textContent=r.blurb;
+  const ul=document.getElementById('resTips'); ul.innerHTML="";
+  r.tips.forEach(t=>{const li=document.createElement('li');li.textContent=t;ul.appendChild(li);});
+  resultBox.classList.add('show');
+  resultBox.scrollIntoView({behavior:"smooth",block:"center"});
+  resultBox.dataset.share=`My result on "How to handle me": ${r.title} (${r.match}). Best ways to brighten my day — ${r.tips.join(" / ")}`;
+});
+document.getElementById('copyBtn').addEventListener('click',async()=>{
+  const txt=resultBox.dataset.share||"";
+  try{await navigator.clipboard.writeText(txt);}catch(e){}
+  const t=document.getElementById('toast'); t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1800);
+});
+document.getElementById('retakeBtn').addEventListener('click',()=>{
+  for(const k in answers)delete answers[k];
+  document.querySelectorAll('.opt').forEach(o=>o.setAttribute('aria-pressed','false'));
+  resultBox.classList.remove('show');
+  qBody.scrollIntoView({behavior:"smooth",block:"center"});
+});
+// ---------- LIVELINESS ----------
+const SEC_MOODS=["calm","focused","post-workout","stressed","happy","happy","friday","calm","post-workout","happy","happy"];
+document.querySelectorAll('.sec-head').forEach((h,i)=>{
+  const txt=document.createElement('div'); txt.className="sec-txt";
+  while(h.firstChild) txt.appendChild(h.firstChild);
+  const av=document.createElement('div'); av.className="sec-ava"; av.innerHTML=miniHead(SEC_MOODS[i]||"happy");
+  h.appendChild(av); h.appendChild(txt);
+});
+const runnerEl=document.querySelector('.runner');
+if(runnerEl) runnerEl.innerHTML=miniHead('post-workout');
+
+const race=document.querySelector('.race');
+let struggleT=null;
+function playRace(){
+  if(!race) return;
+  const r=document.querySelector('.runner');
+  if(r){ r.classList.remove('limping'); r.innerHTML=miniHead('post-workout'); }
+  race.classList.remove('run'); void race.offsetWidth; race.classList.add('run');
+  clearTimeout(struggleT);
+  struggleT=setTimeout(()=>{ if(r){ r.classList.add('limping'); r.innerHTML=miniHead('stressed'); } },1650);
+}
+const replayBtn=document.getElementById('replayRace');
+if(replayBtn) replayBtn.addEventListener('click',playRace);
+
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduceMotion){
+  document.body.classList.add('reveal');
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){
+      e.target.classList.add('in');
+      if(e.target.id==='marathonSec') playRace();
+      io.unobserve(e.target);
+    }});
+  },{threshold:.12});
+  document.querySelectorAll('section').forEach(s=>io.observe(s));
+}
+// ---------- SOUND ----------
+(function(){
+  const btn=document.getElementById('playSound');
+  if(!btn) return;
+  const label=document.getElementById('playLabel');
+  const ico=btn.querySelector('.play-ico');
+  const eq=document.querySelector('.eq');
+  const bars=eq?[...eq.children]:[];
+  let actx=null, master=null, analyser=null, freqData=null;
+  let playing=false, step=0, nextNoteTime=0, timer=null, raf=null;
+  const BPM=138, sixteenth=60/BPM/4;
+  const Am=[220.00,261.63,329.63,440.00], F=[174.61,261.63,349.23,440.00], C=[261.63,329.63,392.00,523.25], G=[196.00,293.66,392.00,493.88];
+  const prog=[Am,Am,F,F,C,C,G,G];
+  function kick(t){
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.frequency.setValueAtTime(150,t); o.frequency.exponentialRampToValueAtTime(45,t+0.12);
+    g.gain.setValueAtTime(0.9,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.18);
+    o.connect(g).connect(master); o.start(t); o.stop(t+0.2);
+  }
+  function pluck(t,freq){
+    const o=actx.createOscillator(), g=actx.createGain(), f=actx.createBiquadFilter();
+    o.type='sawtooth'; o.frequency.value=freq;
+    f.type='lowpass'; f.frequency.setValueAtTime(3200,t); f.frequency.exponentialRampToValueAtTime(700,t+0.18); f.Q.value=7;
+    g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(0.16,t+0.008); g.gain.exponentialRampToValueAtTime(0.001,t+0.22);
+    o.connect(f).connect(g).connect(master); o.start(t); o.stop(t+0.26);
+  }
+  function sub(t,freq){
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.type='sine'; o.frequency.value=freq/2;
+    g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(0.22,t+0.02); g.gain.exponentialRampToValueAtTime(0.001,t+sixteenth*3.6);
+    o.connect(g).connect(master); o.start(t); o.stop(t+sixteenth*4);
+  }
+  function schedule(){
+    while(nextNoteTime < actx.currentTime + 0.12){
+      const chord=prog[Math.floor(step/16)%prog.length];
+      const s=step%16;
+      if(s%4===0) kick(nextNoteTime);
+      if(s%8===0) sub(nextNoteTime, chord[0]);
+      pluck(nextNoteTime, chord[s%chord.length]);
+      nextNoteTime += sixteenth; step++;
+    }
+    timer=setTimeout(schedule,25);
+  }
+  function draw(){
+    if(analyser){
+      analyser.getByteFrequencyData(freqData);
+      bars.forEach((b,i)=>{ const v=(freqData[2+i*3]||0)/255; b.style.height=(16+v*84)+'%'; });
+    }
+    raf=requestAnimationFrame(draw);
+  }
+  function start(){
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==='suspended') actx.resume();
+    master=actx.createGain(); master.gain.value=0.4;
+    analyser=actx.createAnalyser(); analyser.fftSize=128; freqData=new Uint8Array(analyser.frequencyBinCount);
+    const comp=actx.createDynamicsCompressor();
+    master.connect(comp); comp.connect(analyser); analyser.connect(actx.destination);
+    step=0; nextNoteTime=actx.currentTime+0.06; playing=true;
+    if(eq) eq.classList.add('live');
+    schedule(); draw();
+    btn.setAttribute('aria-pressed','true'); ico.textContent='⏸'; label.textContent='Pause';
+  }
+  function stop(){
+    playing=false; clearTimeout(timer); cancelAnimationFrame(raf);
+    if(master&&actx){ try{ master.gain.setValueAtTime(master.gain.value,actx.currentTime); master.gain.exponentialRampToValueAtTime(0.0001,actx.currentTime+0.12);}catch(e){} }
+    if(eq) eq.classList.remove('live');
+    bars.forEach(b=>b.style.height='');
+    btn.setAttribute('aria-pressed','false'); ico.textContent='▶'; label.textContent='Play a 138 BPM loop';
+  }
+  btn.addEventListener('click',()=>{ playing?stop():start(); });
+})();
+
+// ---------- GOOD-TO-KNOW FILTER ----------
+(function(){
+  const tabs=document.getElementById('gtkTabs'), grid=document.getElementById('gtkGrid');
+  if(!tabs||!grid) return;
+  tabs.addEventListener('click',e=>{
+    const b=e.target.closest('.tab'); if(!b) return;
+    [...tabs.children].forEach(t=>t.classList.toggle('active',t===b));
+    const cat=b.dataset.cat;
+    [...grid.children].forEach(c=>c.classList.toggle('hide', cat!=='all' && c.dataset.cat!==cat));
+  });
+})();
+
+// ---------- GLOBE ----------
+(function(){
+  const el=document.getElementById('globe');
+  if(!el) return;
+  const VIS=new Set(["Netherlands","Belgium","Luxembourg","France","Spain","Portugal","Sweden","Poland","Russia","United Kingdom","Ireland","Germany","Austria","Hungary","Czechia","Slovakia","Slovenia","Croatia","Montenegro","Bosnia and Herz.","Albania","Italy","Switzerland","Latvia","Estonia","Turkey","Ukraine","Romania","Greece","Serbia","Iran","Nepal","India","United Arab Emirates","Laos","Cambodia","Thailand","Vietnam","Kazakhstan","China","Japan","Namibia","South Africa","Tanzania","Kenya","Morocco","Brazil","Argentina","Uruguay","Colombia","Mexico","Paraguay","Liechtenstein","San Marino","Mauritius"]);
+  const LATLON={"Netherlands":[52,5],"Belgium":[51,4],"Luxembourg":[50,6],"France":[47,2],"Spain":[40,-4],"Portugal":[39,-8],"Sweden":[60,15],"Poland":[52,19],"Russia":[56,38],"Scotland":[56,-4],"England":[52,-1],"Ireland":[53,-8],"Germany":[51,10],"Austria":[47,14],"Liechtenstein":[47,9],"Hungary":[47,19],"Czechia":[50,15],"Slovakia":[48,19],"Slovenia":[46,15],"Croatia":[45,16],"Montenegro":[42,19],"Albania":[41,20],"Bosnia":[44,18],"Italy":[42,13],"San Marino":[44,12],"Switzerland":[47,8],"Latvia":[57,25],"Estonia":[59,26],"Turkey":[39,35],"Ukraine":[49,32],"Romania":[46,25],"Greece":[39,22],"Serbia":[44,21],"Iran":[32,53],"Nepal":[28,84],"India":[22,79],"UAE":[24,54],"Laos":[18,105],"Cambodia":[12,105],"Thailand":[15,101],"Vietnam":[16,108],"Kazakhstan":[48,67],"China":[35,104],"Japan":[36,138],"Namibia":[-22,17],"South Africa":[-29,24],"Tanzania":[-6,35],"Kenya":[0,38],"Morocco":[32,-6],"Mauritius":[-20,57],"Brazil":[-10,-52],"Argentina":[-34,-64],"Uruguay":[-33,-56],"Colombia":[4,-72],"Mexico":[23,-102],"Paraguay":[-23,-58]};
+  function buildFallback(){
+    const c=document.getElementById('globeCol'); if(!c) return;
+    const land=[
+      "M55 28 L95 24 L120 30 L128 44 L116 52 L104 50 L96 72 L86 64 L82 50 L66 46 L52 38 Z",
+      "M120 18 L134 16 L132 30 L122 30 Z",
+      "M104 86 L120 82 L130 96 L126 116 L114 140 L106 122 L102 100 Z",
+      "M168 30 L196 26 L214 32 L208 46 L188 50 L174 44 L168 38 Z",
+      "M172 56 L214 54 L228 72 L222 104 L200 124 L188 104 L178 80 Z",
+      "M214 24 L300 18 L334 38 L326 64 L292 78 L256 68 L230 54 L216 40 Z",
+      "M300 110 L334 106 L340 122 L316 130 L300 120 Z"
+    ].map(d=>`<path d="${d}"/>`).join("");
+    let grat="";
+    for(let lo=0;lo<=360;lo+=30) grat+=`<line x1="${lo}" y1="0" x2="${lo}" y2="180"/>`;
+    for(let la=0;la<=180;la+=30) grat+=`<line x1="0" y1="${la}" x2="360" y2="${la}"/>`;
+    let dots="";
+    for(const k in LATLON){ const ll=LATLON[k]; const x=(ll[1]+180).toFixed(1); const y=(90-ll[0]).toFixed(1); dots+=`<circle cx="${x}" cy="${y}" r="2.5" fill="#F5821F" stroke="#fff" stroke-width="0.5"/>`; }
+    c.innerHTML=`<svg viewBox="0 0 360 180" class="flatmap" role="img" aria-label="Flat world map with visited countries marked in orange.">
+      <rect width="360" height="180" fill="#DCEAF2"/>
+      <g fill="#CFE0D6" stroke="#B4CEDB" stroke-width="0.5">${land}</g>
+      <g stroke="#BFD6E0" stroke-width="0.4" fill="none">${grat}</g>
+      ${dots}
+    </svg><p class="globe-note">Offline map — each orange dot is a country I've visited, placed by its real location.</p>`;
+  }
+  if(!window.d3){ buildFallback(); return; }
+  const proj=d3.geoOrthographic().scale(145).translate([150,150]);
+  const path=d3.geoPath(proj);
+  const svg=d3.select(el);
+  svg.append('circle').attr('cx',150).attr('cy',150).attr('r',145).attr('fill','#DCEAF2').attr('stroke','#B4CEDB').attr('stroke-width',1);
+  const gr=svg.append('path').datum(d3.geoGraticule10()).attr('fill','none').attr('stroke','#BFD6E0').attr('stroke-width',0.4);
+  const cg=svg.append('g');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r=>r.json()).then(w=>{
+    const feats=topojson.feature(w,w.objects.countries).features;
+    const sel=cg.selectAll('path').data(feats).join('path')
+      .attr('fill',d=>VIS.has(d.properties.name)?'#F5821F':'#CFE0D6')
+      .attr('stroke','#FFFFFF').attr('stroke-width',0.3);
+    let rot=[10,-18], timer=null;
+    function draw(){ proj.rotate(rot); gr.attr('d',path); sel.attr('d',path); }
+    draw();
+    if(!reduce) timer=d3.timer(()=>{ rot[0]+=0.16; draw(); });
+    let drag=false,lx,ly;
+    el.addEventListener('pointerdown',e=>{ drag=true; lx=e.clientX; ly=e.clientY; if(timer){timer.stop();timer=null;} });
+    window.addEventListener('pointerup',()=>{ drag=false; });
+    window.addEventListener('pointermove',e=>{ if(!drag)return; rot[0]+=(e.clientX-lx)*0.4; rot[1]=Math.max(-90,Math.min(90,rot[1]-(e.clientY-ly)*0.4)); lx=e.clientX; ly=e.clientY; draw(); });
+  }).catch(()=>{ buildFallback(); });
+})();
+</script>
+</body>
+</html>
