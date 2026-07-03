@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <style>
 :root{
   --ink:#28324C; --ink-soft:#5B6577; --line:#E4E7EA;
@@ -354,7 +356,7 @@ body.reveal section.in{opacity:1;transform:none}
     <p>A direct, sincere (and occasionally silly) field guide to my moods, my values, and the fastest ways to work well with me.</p>
     <div class="pills">
       <span class="pill">Dutch–Austrian</span><span class="pill">Zürich</span>
-      <span class="pill">Sporty</span><span class="pill">33</span><span class="pill">56 countries</span>
+      <span class="pill">Sporty</span><span class="pill">33</span><span class="pill">57 countries</span>
     </div>
   </header>
 
@@ -463,7 +465,7 @@ body.reveal section.in{opacity:1;transform:none}
   <!-- DAMAGE REPORT -->
   <section>
     <div class="sec-head">
-      <h2>The damage report</h2>
+      <h2>The self-destruction report</h2>
       <p class="lead">A partial list of bones I've tested to destruction. Still standing.</p>
     </div>
     <div class="card damage-layout">
@@ -493,12 +495,12 @@ body.reveal section.in{opacity:1;transform:none}
             <text x="68" y="101" text-anchor="middle" font-family="Baloo 2,cursive" font-weight="700" font-size="12" fill="#fff">1</text>
           </g>
           <g class="bone-spot" data-i="1" tabindex="0" role="button" aria-label="Right big toe injury">
-            <circle cx="118" cy="432" r="13" fill="#D4920A" fill-opacity="0.9"/>
-            <text x="118" y="437" text-anchor="middle" font-family="Baloo 2,cursive" font-weight="700" font-size="12" fill="#fff">2</text>
+            <circle cx="82" cy="432" r="13" fill="#D4920A" fill-opacity="0.9"/>
+            <text x="82" y="437" text-anchor="middle" font-family="Baloo 2,cursive" font-weight="700" font-size="12" fill="#fff">2</text>
           </g>
           <g class="bone-spot" data-i="2" tabindex="0" role="button" aria-label="Hand injury">
-            <circle cx="180" cy="254" r="13" fill="#3C6E8F" fill-opacity="0.9"/>
-            <text x="180" y="259" text-anchor="middle" font-family="Baloo 2,cursive" font-weight="700" font-size="12" fill="#fff">3</text>
+            <circle cx="20" cy="254" r="13" fill="#3C6E8F" fill-opacity="0.9"/>
+            <text x="20" y="259" text-anchor="middle" font-family="Baloo 2,cursive" font-weight="700" font-size="12" fill="#fff">3</text>
           </g>
           <g class="bone-spot" data-i="3" tabindex="0" role="button" aria-label="Rib and shoulder injury">
             <circle cx="136" cy="148" r="13" fill="#3E7B47" fill-opacity="0.9"/>
@@ -517,8 +519,8 @@ body.reveal section.in{opacity:1;transform:none}
           <div class="il-item active" data-i="0" style="--c:#C8102E"><div class="il-dot"></div><span class="il-name">Collarbone</span><span class="il-when">At birth</span></div>
           <div class="il-item" data-i="1" style="--c:#D4920A"><div class="il-dot"></div><span class="il-name">Right big toe</span><span class="il-when">Age 10</span></div>
           <div class="il-item" data-i="2" style="--c:#3C6E8F"><div class="il-dot"></div><span class="il-name">Hand</span><span class="il-when">Age 15</span></div>
-          <div class="il-item" data-i="3" style="--c:#3E7B47"><div class="il-dot"></div><span class="il-name">Rib &amp; shoulder</span><span class="il-when">Snowboarding</span></div>
-          <div class="il-item" data-i="4" style="--c:#F5821F"><div class="il-dot"></div><span class="il-name">Fibula</span><span class="il-when">Marathon</span></div>
+          <div class="il-item" data-i="3" style="--c:#3E7B47"><div class="il-dot"></div><span class="il-name">Rib &amp; shoulder</span><span class="il-when">Age 18</span></div>
+          <div class="il-item" data-i="4" style="--c:#F5821F"><div class="il-dot"></div><span class="il-name">Fibula</span><span class="il-when">Age 30</span></div>
         </div>
       </div>
     </div>
@@ -586,6 +588,28 @@ body.reveal section.in{opacity:1;transform:none}
           </g>
         </svg>
         <div class="oo-cap"><h4>Everest Base Camp</h4><p>On foot. My number one for nature, tied with Namibia.</p><span class="oo-tag">5,364 m</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GIRO -->
+  <section>
+    <div class="sec-head">
+      <h2>The Giro ritual</h2>
+      <p class="lead">Watch every stage. Then go ride the roads yourself.</p>
+    </div>
+    <div class="card" style="padding:22px 26px">
+      <p style="margin:0 0 0;font-size:15px;line-height:1.7;color:var(--ink-soft)">Every May, the Giro d'Italia takes over the living room — my girlfriend and I watch every stage, argue about breakaways, and within weeks we're in Italy on the bikes ourselves. The most relaxed (and most calorie-dense) week of the year. Afterwards, MVDP is still better than Verstappen.</p>
+    </div>
+    <div class="card collage" style="margin-top:14px">
+      <h3>On the bike</h3>
+      <p class="sub">Roads, climbs, and a pasta intake that defies medical advice.</p>
+      <div class="cg" style="margin-top:10px">
+        <div class="ci"><img src="Images/Biking/IMG_1857.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
+        <div class="ci"><img src="Images/Biking/IMG_1859.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
+        <div class="ci"><img src="Images/Biking/IMG_1868.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
+        <div class="ci"><img src="Images/Biking/IMG_1869.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
+        <div class="ci"><img src="Images/Biking/IMG_1870.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
       </div>
     </div>
   </section>
@@ -850,24 +874,18 @@ setMood(MOODS.find(m=>m.key==="demotivated")||MOODS[0]);
 
 // ---------- LIFECYCLE ----------
 const STAGES=[
-  {age:0, i:"👶", t:"Born in the Netherlands", n:"Dutch dad, Austrian mum, raised in Limburg. Rest came standard, batteries included."},
-  {age:3, i:"🏊", t:"First sport: swimming", n:"In the pool until age six, before the pitch came calling."},
-  {age:6, i:"⚽", t:"FC Hoensbroek, last man back", n:"Joined FC Hoensbroek as the last defender — the calm one who reads the game and cleans up. Basically lived on the pitch."},
-  {age:14,i:"🗞️", t:"First job: paper round", n:"Delivering newspapers before school — my first wage at 14. Kept the round going even with a broken hand at 15; the papers don't deliver themselves."},
-  {age:15,i:"👟", t:"Hung up the boots", n:"Stopped club football at 15. Would I have gone pro, like (obviously) every single one of my friends? We'll sadly never know. Kept moving regardless — gym, running, anything outdoors."},
-  {age:16,i:"🛒", t:"Supermarket shifts", n:"Shelves and tills at 16. There was always a job on the side."},
-  {age:18,i:"🎓", t:"Rotterdam — bachelor begins", n:"International Business Administration at Rotterdam School of Management (2011)."},
-  {age:18,i:"💪", t:"Waiter & gym instructor", n:"Through uni: waiting tables and coaching at the university gym. Never really not working."},
-  {age:20,i:"🏅", t:"Cum laude, in two years", n:"Finished the bachelor early and with honours (2013). Onwards."},
-  {age:21,i:"🗼", t:"Paris — Catalina Marketing", n:"Data scientist on consumer spend and pricing for Carrefour and P&G. Football with colleagues, runs, and many nights watching PSG (2014)."},
-  {age:22,i:"🏦", t:"Back to Rotterdam, then London", n:"Master's in Finance & Investment (done June 2015), then DCM origination for Benelux & DACH at Société Générale (2015). Loved the work and the deals; the crowd ran on espresso and adrenaline. Adopted Fulham."},
-  {age:25,i:"❤️", t:"Met my girlfriend", n:"2018. Brazilian, brilliant, and far too patient with me. Easily the best entry on this whole timeline."},
-  {age:25,i:"📜", t:"Passed the CFA", n:"Also 2018. Three exams that ate every spare brain cell I had outside of work — no regrets, slightly fewer hobbies for a while."},
-  {age:26,i:"🗻", t:"Everest Base Camp", n:"Walked to 5,364 m through the Khumbu. Tied with Namibia as my number one for nature."},
-  {age:27,i:"🏔️", t:"Zürich, mid-lockdown", n:"Joined Accenture Zürich in March 2020 — they actually tried to cancel the contract first. Survived. The bikes and the Alps made it more than worth it."},
-  {age:30,i:"🏃", t:"First race ever: a marathon", n:"My debut competition? A full marathon, in Zürich, off training squeezed into lunch breaks. It did not go to plan — gloriously so. See the next section."},
-  {age:33,i:"😄", t:"Still officially 'Consultant'", n:"Cum laude, a master's, the CFA, a global bank, data science in Paris — and the title has heroically survived every single review. Honestly? At this point it's just funny. The real headline: the colleagues who've backed me cycle after cycle. You lot are the reason I keep showing up grinning."},
-  {age:33,i:"🏡", t:"Current build", n:"A house, a loving girlfriend, two carbon bikes, one gouda-only Pomeranian (Nutella), snowboarding, running, and a permanent itch to get better at things. Life, frankly, is good."}
+  {age:0, i:"👶", t:"Born in the Netherlands", n:"Dutch dad, Austrian mum, raised in Limburg."},
+  {age:6, i:"⚽", t:"FC Hoensbroek, last man back", n:"Defender until 15. Basically lived on the pitch."},
+  {age:14,i:"🗞️", t:"First job: paper round", n:"Delivering newspapers before school at 14. Kept the round going with a broken hand — the papers don't deliver themselves."},
+  {age:18,i:"🎓", t:"Rotterdam — IBA, cum laude", n:"International Business Administration at Rotterdam School of Management. Finished early and with honours."},
+  {age:18,i:"💪", t:"Waiter & gym instructor", n:"Through uni: waiting tables and coaching at the university gym. There was always a job on the side."},
+  {age:21,i:"🗼", t:"Paris — data scientist", n:"Consumer spend and pricing for Carrefour and P&G. Football with colleagues, runs, and many PSG nights."},
+  {age:22,i:"🏦", t:"London — Société Générale", n:"DCM origination for Benelux & DACH after an MSc in Finance & Investment. Adopted Fulham."},
+  {age:25,i:"❤️", t:"Met my girlfriend", n:"2018. Brazilian, brilliant, and far too patient with me. The best entry on this timeline."},
+  {age:25,i:"📜", t:"Passed the CFA", n:"Three exams that ate every spare brain cell. No regrets."},
+  {age:26,i:"🗻", t:"Everest Base Camp", n:"5,364 m through the Khumbu. My number one for nature, tied with Namibia."},
+  {age:30,i:"🏃", t:"First race: a marathon", n:"My debut competition? A full marathon in Zürich, trained on lunch breaks, on a broken fibula. Gloriously so."},
+  {age:33,i:"🏡", t:"Life now", n:"A house, a girlfriend, two carbon bikes, one Gouda-only Pomeranian (Nutella), and a permanent itch to get better at things."}
 ];
 const tl=document.getElementById('timeline');
 STAGES.forEach((s,i)=>{
@@ -898,12 +916,12 @@ playBtn.addEventListener('click',()=>{
 
 // ---------- PASSPORT ----------
 const PASSPORT={
-  Europe:["Netherlands","Belgium","Luxembourg","France","Spain","Portugal","Sweden","Poland","Russia","Scotland","England","Ireland","Germany","Austria","Liechtenstein","Hungary","Czechia","Slovakia","Slovenia","Croatia","Montenegro","Albania","Bosnia","Italy","San Marino","Switzerland","Latvia","Estonia","Turkey","Ukraine","Romania","Greece","Serbia"],
-  Asia:["Iran","Nepal","India","UAE","Laos","Cambodia","Thailand","Vietnam","Kazakhstan","China","Japan"],
-  Africa:["Namibia","South Africa","Tanzania","Kenya","Morocco","Mauritius"],
-  Americas:["Brazil","Argentina","Uruguay","Colombia","Mexico","Paraguay"]
+  Europe:["Albania","Austria","Belgium","Bosnia","Croatia","Czechia","England","Estonia","France","Germany","Greece","Hungary","Ireland","Italy","Latvia","Liechtenstein","Luxembourg","Monaco","Montenegro","Netherlands","Poland","Portugal","Romania","Russia","San Marino","Scotland","Serbia","Slovakia","Slovenia","Spain","Sweden","Switzerland","Turkey","Ukraine"],
+  Asia:["Cambodia","China","India","Iran","Japan","Kazakhstan","Laos","Nepal","Thailand","UAE","Vietnam"],
+  Africa:["Kenya","Mauritius","Morocco","Namibia","South Africa","Tanzania"],
+  Americas:["Argentina","Brazil","Colombia","Mexico","Paraguay","Uruguay"]
 };
-const CODES={Netherlands:"nl",Belgium:"be",Luxembourg:"lu",France:"fr",Spain:"es",Portugal:"pt",Sweden:"se",Poland:"pl",Russia:"ru",Scotland:"gb-sct",England:"gb-eng",Ireland:"ie",Germany:"de",Austria:"at",Liechtenstein:"li",Hungary:"hu",Czechia:"cz",Slovakia:"sk",Slovenia:"si",Croatia:"hr",Montenegro:"me",Albania:"al",Bosnia:"ba",Italy:"it","San Marino":"sm",Switzerland:"ch",Latvia:"lv",Estonia:"ee",Turkey:"tr",Ukraine:"ua",Romania:"ro",Greece:"gr",Serbia:"rs",Iran:"ir",Nepal:"np",India:"in",UAE:"ae",Laos:"la",Cambodia:"kh",Thailand:"th",Vietnam:"vn",Kazakhstan:"kz",China:"cn",Japan:"jp",Namibia:"na","South Africa":"za",Tanzania:"tz",Kenya:"ke",Morocco:"ma",Mauritius:"mu",Brazil:"br",Argentina:"ar",Uruguay:"uy",Colombia:"co",Mexico:"mx",Paraguay:"py"};
+const CODES={Netherlands:"nl",Belgium:"be",Luxembourg:"lu",France:"fr",Spain:"es",Portugal:"pt",Sweden:"se",Poland:"pl",Russia:"ru",Scotland:"gb-sct",England:"gb-eng",Ireland:"ie",Germany:"de",Austria:"at",Liechtenstein:"li",Hungary:"hu",Czechia:"cz",Slovakia:"sk",Slovenia:"si",Croatia:"hr",Montenegro:"me",Albania:"al",Bosnia:"ba",Italy:"it","San Marino":"sm",Switzerland:"ch",Latvia:"lv",Estonia:"ee",Turkey:"tr",Ukraine:"ua",Romania:"ro",Greece:"gr",Serbia:"rs",Monaco:"mc",Iran:"ir",Nepal:"np",India:"in",UAE:"ae",Laos:"la",Cambodia:"kh",Thailand:"th",Vietnam:"vn",Kazakhstan:"kz",China:"cn",Japan:"jp",Namibia:"na","South Africa":"za",Tanzania:"tz",Kenya:"ke",Morocco:"ma",Mauritius:"mu",Brazil:"br",Argentina:"ar",Uruguay:"uy",Colombia:"co",Mexico:"mx",Paraguay:"py"};
 const pp=document.getElementById('passport');
 let total=0;
 for(const region in PASSPORT){
@@ -1118,8 +1136,8 @@ if(!reduceMotion){
 (function(){
   const el=document.getElementById('globe');
   if(!el) return;
-  const VIS=new Set(["Netherlands","Belgium","Luxembourg","France","Spain","Portugal","Sweden","Poland","Russia","United Kingdom","Ireland","Germany","Austria","Hungary","Czechia","Slovakia","Slovenia","Croatia","Montenegro","Bosnia and Herz.","Albania","Italy","Switzerland","Latvia","Estonia","Turkey","Ukraine","Romania","Greece","Serbia","Iran","Nepal","India","United Arab Emirates","Laos","Cambodia","Thailand","Vietnam","Kazakhstan","China","Japan","Namibia","South Africa","Tanzania","Kenya","Morocco","Brazil","Argentina","Uruguay","Colombia","Mexico","Paraguay","Liechtenstein","San Marino","Mauritius"]);
-  const LATLON={"Netherlands":[52,5],"Belgium":[51,4],"Luxembourg":[50,6],"France":[47,2],"Spain":[40,-4],"Portugal":[39,-8],"Sweden":[60,15],"Poland":[52,19],"Russia":[56,38],"Scotland":[56,-4],"England":[52,-1],"Ireland":[53,-8],"Germany":[51,10],"Austria":[47,14],"Liechtenstein":[47,9],"Hungary":[47,19],"Czechia":[50,15],"Slovakia":[48,19],"Slovenia":[46,15],"Croatia":[45,16],"Montenegro":[42,19],"Albania":[41,20],"Bosnia":[44,18],"Italy":[42,13],"San Marino":[44,12],"Switzerland":[47,8],"Latvia":[57,25],"Estonia":[59,26],"Turkey":[39,35],"Ukraine":[49,32],"Romania":[46,25],"Greece":[39,22],"Serbia":[44,21],"Iran":[32,53],"Nepal":[28,84],"India":[22,79],"UAE":[24,54],"Laos":[18,105],"Cambodia":[12,105],"Thailand":[15,101],"Vietnam":[16,108],"Kazakhstan":[48,67],"China":[35,104],"Japan":[36,138],"Namibia":[-22,17],"South Africa":[-29,24],"Tanzania":[-6,35],"Kenya":[0,38],"Morocco":[32,-6],"Mauritius":[-20,57],"Brazil":[-10,-52],"Argentina":[-34,-64],"Uruguay":[-33,-56],"Colombia":[4,-72],"Mexico":[23,-102],"Paraguay":[-23,-58]};
+  const VIS=new Set(["Netherlands","Belgium","Luxembourg","France","Spain","Portugal","Sweden","Poland","Russia","United Kingdom","Ireland","Germany","Austria","Hungary","Czechia","Slovakia","Slovenia","Croatia","Montenegro","Bosnia and Herz.","Albania","Italy","Switzerland","Latvia","Estonia","Turkey","Ukraine","Romania","Greece","Serbia","Monaco","Iran","Nepal","India","United Arab Emirates","Laos","Cambodia","Thailand","Vietnam","Kazakhstan","China","Japan","Namibia","South Africa","Tanzania","Kenya","Morocco","Brazil","Argentina","Uruguay","Colombia","Mexico","Paraguay","Liechtenstein","San Marino","Mauritius"]);
+  const LATLON={"Netherlands":[52,5],"Belgium":[51,4],"Luxembourg":[50,6],"France":[47,2],"Spain":[40,-4],"Portugal":[39,-8],"Sweden":[60,15],"Poland":[52,19],"Russia":[56,38],"Scotland":[56,-4],"England":[52,-1],"Ireland":[53,-8],"Germany":[51,10],"Austria":[47,14],"Liechtenstein":[47,9],"Hungary":[47,19],"Czechia":[50,15],"Slovakia":[48,19],"Slovenia":[46,15],"Croatia":[45,16],"Montenegro":[42,19],"Albania":[41,20],"Bosnia":[44,18],"Italy":[42,13],"San Marino":[44,12],"Switzerland":[47,8],"Latvia":[57,25],"Estonia":[59,26],"Turkey":[39,35],"Ukraine":[49,32],"Romania":[46,25],"Greece":[39,22],"Serbia":[44,21],"Monaco":[43.7,7.4],"Iran":[32,53],"Nepal":[28,84],"India":[22,79],"UAE":[24,54],"Laos":[18,105],"Cambodia":[12,105],"Thailand":[15,101],"Vietnam":[16,108],"Kazakhstan":[48,67],"China":[35,104],"Japan":[36,138],"Namibia":[-22,17],"South Africa":[-29,24],"Tanzania":[-6,35],"Kenya":[0,38],"Morocco":[32,-6],"Mauritius":[-20,57],"Brazil":[-10,-52],"Argentina":[-34,-64],"Uruguay":[-33,-56],"Colombia":[4,-72],"Mexico":[23,-102],"Paraguay":[-23,-58]};
   function buildFallback(){
     const c=document.getElementById('globeCol'); if(!c) return;
     const land=[
@@ -1169,7 +1187,7 @@ if(!reduceMotion){
 // ---------- PHOTO COLLAGE ----------
 (function(){
   const tabs=document.querySelectorAll('.ctab');
-  const items=document.querySelectorAll('.ci');
+  const items=document.querySelectorAll('#collageGrid .ci');
   tabs.forEach(tab=>{
     tab.addEventListener('click',()=>{
       tabs.forEach(t=>t.classList.remove('active'));
@@ -1196,8 +1214,8 @@ if(!reduceMotion){
     {title:'Collarbone',when:'At birth',icon:'🦴',color:'#C8102E',story:'Broken at birth — got the injuries started nice and early.'},
     {title:'Right big toe',when:'Age 10',icon:'🦶',color:'#D4920A',story:'Age 10, a classmate dropped a table on it. No feeling there to this day.'},
     {title:'Hand',when:'Age 15',icon:'✋',color:'#3C6E8F',story:'A high-school brawl at 15. Kept doing my paper round through it — the papers don\'t deliver themselves.'},
-    {title:'Rib &amp; shoulder',when:'Snowboarding',icon:'🏂',color:'#3E7B47',story:'Snowboarding — rib one trip, shoulder another. Both times I just finished the day on the mountain anyway.'},
-    {title:'Fibula',when:'Marathon',icon:'🏃',color:'#F5821F',story:'A stress fracture, in two places, from too much running. Then I ran a marathon on it. Would (probably) not recommend.'}
+    {title:'Rib &amp; shoulder',when:'Age 18',icon:'🏂',color:'#3E7B47',story:'Snowboarding — rib one trip, shoulder another. Both times I just finished the day on the mountain anyway.'},
+    {title:'Fibula',when:'Age 30',icon:'🏃',color:'#F5821F',story:'A stress fracture, in two places, from too much running. Then I ran a marathon on it. Would (probably) not recommend.'}
   ];
   const panel=document.getElementById('injPanel');
   const legend=document.getElementById('injLegend');
