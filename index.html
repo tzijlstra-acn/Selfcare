@@ -787,12 +787,12 @@ body.reveal section.in{opacity:1;transform:none}
       <p class="lead">More of the good stuff — and a challenge that finally fits.</p>
     </div>
     <div class="card facts future">
-      <div class="fact"><p class="k">🌍 More passport stamps</p><p class="v">Top of the list: Patagonia, Japan, and a proper Central Asian traverse. The world is large and I intend to keep shrinking it.</p></div>
-      <div class="fact"><p class="k">🏔️ More vertical</p><p class="v">Bigger cols, longer trails, and whatever mountain the next race points at. Altitude is the plan.</p></div>
-      <div class="fact"><p class="k">🚴 More Giro, more roads</p><p class="v">Same ritual — find the climb, wait in the cold, watch thirty seconds of pure spectacle, then go ride it yourself. Non-negotiable every May.</p></div>
-      <div class="fact"><p class="k">💼 The next challenge</p><p class="v">Finance brain, data hands, endurance for the long projects — looking for the role that genuinely stretches all three at once. Bring the hard problems.</p></div>
-      <div class="fact"><p class="k">🏡 Home base, properly</p><p class="v">The mountain hut, the house, and enough good evenings with good food and even better company. The quiet stuff that makes the rest of it worthwhile.</p></div>
-      <div class="fact"><p class="k">🏅 An Ironman, probably</p><p class="v">The running base is there. Two carbon bikes are already in the garage. It's less a question of if than when — and how the fibula holds up.</p></div>
+      <div class="fact"><p class="k">🌎 Bolivia &amp; Peru</p><p class="v">Salt flats, Andes roads, and Lake Titicaca. High altitude, big landscapes — exactly my kind of trip.</p></div>
+      <div class="fact"><p class="k">🌍 More of Africa</p><p class="v">East and West still have huge gaps in the passport. The continent keeps pulling me back.</p></div>
+      <div class="fact"><p class="k">🏔️ More vertical</p><p class="v">Bigger mountain cols, longer trail runs, and whatever summit the next trip puts in front of me.</p></div>
+      <div class="fact"><p class="k">🚴 More Giro, more roads</p><p class="v">Same ritual every May — find the climb, wait in the cold, watch thirty seconds of pure spectacle, then ride it yourself.</p></div>
+      <div class="fact"><p class="k">🏅 One-day race challenges</p><p class="v">A sportive up a proper col, a trail race with a view, something you can train for on lunch breaks and still enjoy the weekend. That's my kind of racing.</p></div>
+      <div class="fact"><p class="k">💼 The next challenge</p><p class="v">Finance brain, data hands, endurance for the long haul — looking for the role that stretches all three. Hard problems welcome.</p></div>
     </div>
   </section>
 
@@ -1080,7 +1080,8 @@ if(!reduceMotion){
 (function(){
   const el=document.getElementById('globe');
   if(!el) return;
-  const VIS=new Set(["Netherlands","Belgium","Luxembourg","France","Spain","Portugal","Sweden","Poland","Russia","United Kingdom","Ireland","Germany","Austria","Hungary","Czechia","Slovakia","Slovenia","Croatia","Montenegro","Bosnia and Herz.","Albania","Italy","Switzerland","Latvia","Estonia","Turkey","Ukraine","Romania","Greece","Serbia","Monaco","Iran","Nepal","India","United Arab Emirates","Laos","Cambodia","Thailand","Vietnam","Kazakhstan","China","Japan","Namibia","South Africa","Tanzania","Kenya","Morocco","Brazil","Argentina","Uruguay","Colombia","Mexico","Paraguay","Liechtenstein","San Marino","Mauritius"]);
+  // ISO 3166-1 numeric codes — world-atlas features have d.id, not d.properties.name
+  const VIS=new Set([528,56,442,250,724,620,752,616,643,826,372,276,40,348,203,703,705,191,499,70,8,380,756,428,233,792,804,642,300,688,492,364,524,356,784,418,116,764,704,398,156,392,516,710,834,404,504,76,32,858,170,484,600,438,674,480]);
   const LATLON={"Netherlands":[52,5],"Belgium":[51,4],"Luxembourg":[50,6],"France":[47,2],"Spain":[40,-4],"Portugal":[39,-8],"Sweden":[60,15],"Poland":[52,19],"Russia":[56,38],"Scotland":[56,-4],"England":[52,-1],"Ireland":[53,-8],"Germany":[51,10],"Austria":[47,14],"Liechtenstein":[47,9],"Hungary":[47,19],"Czechia":[50,15],"Slovakia":[48,19],"Slovenia":[46,15],"Croatia":[45,16],"Montenegro":[42,19],"Albania":[41,20],"Bosnia":[44,18],"Italy":[42,13],"San Marino":[44,12],"Switzerland":[47,8],"Latvia":[57,25],"Estonia":[59,26],"Turkey":[39,35],"Ukraine":[49,32],"Romania":[46,25],"Greece":[39,22],"Serbia":[44,21],"Monaco":[43.7,7.4],"Iran":[32,53],"Nepal":[28,84],"India":[22,79],"UAE":[24,54],"Laos":[18,105],"Cambodia":[12,105],"Thailand":[15,101],"Vietnam":[16,108],"Kazakhstan":[48,67],"China":[35,104],"Japan":[36,138],"Namibia":[-22,17],"South Africa":[-29,24],"Tanzania":[-6,35],"Kenya":[0,38],"Morocco":[32,-6],"Mauritius":[-20,57],"Brazil":[-10,-52],"Argentina":[-34,-64],"Uruguay":[-33,-56],"Colombia":[4,-72],"Mexico":[23,-102],"Paraguay":[-23,-58]};
   function buildFallback(){
     const c=document.getElementById('globeCol'); if(!c) return;
@@ -1116,7 +1117,7 @@ if(!reduceMotion){
   fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r=>r.json()).then(w=>{
     const feats=topojson.feature(w,w.objects.countries).features;
     const sel=cg.selectAll('path').data(feats).join('path')
-      .attr('fill',d=>VIS.has(d.properties.name)?'#F5821F':'#CFE0D6')
+      .attr('fill',d=>VIS.has(+d.id)?'#F5821F':'#CFE0D6')
       .attr('stroke','#FFFFFF').attr('stroke-width',0.3);
     let rot=[10,-18], timer=null;
     function draw(){ proj.rotate(rot); gr.attr('d',path); sel.attr('d',path); }
