@@ -355,9 +355,27 @@ body.reveal section.in{opacity:1;transform:none}
   *{scroll-behavior:auto}
 }
 :focus-visible{outline:3px solid var(--alp);outline-offset:2px;border-radius:6px}
+#pwGate{position:fixed;inset:0;background:var(--bg1);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:0}
+#pwBox{background:#fff;border-radius:20px;box-shadow:0 8px 40px rgba(44,62,80,.13);padding:48px 44px 40px;max-width:380px;width:90%;text-align:center}
+#pwBox h2{font-family:"Baloo 2",cursive;font-size:22px;color:var(--ink);margin:0 0 6px}
+#pwBox p{color:var(--ink-soft);font-size:14px;margin:0 0 24px}
+#pwInput{width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit;color:var(--ink);outline:none;transition:border-color .15s;margin-bottom:12px}
+#pwInput:focus{border-color:var(--alp)}
+#pwBtn{width:100%;padding:13px;background:var(--alp);color:#fff;border:none;border-radius:10px;font-family:"Baloo 2",cursive;font-size:16px;font-weight:600;cursor:pointer;transition:background .15s}
+#pwBtn:hover{background:#2d5a77}
+#pwErr{color:var(--rood);font-size:13px;margin-top:10px;min-height:18px}
 </style>
 </head>
 <body>
+<div id="pwGate">
+  <div id="pwBox">
+    <h2>Who are you?</h2>
+    <p>Enter the password to read on.</p>
+    <input id="pwInput" type="password" placeholder="Password" autocomplete="current-password">
+    <button id="pwBtn">Enter →</button>
+    <div id="pwErr"></div>
+  </div>
+</div>
 <div class="shell">
 
   <header>
@@ -1177,6 +1195,21 @@ if(!reduceMotion){
   });
   if(legend)[...legend.children].forEach((el,i)=>el.addEventListener('click',()=>showInjury(i)));
   showInjury(0);
+})();
+// ---------- PASSWORD GATE ----------
+(function(){
+  const gate=document.getElementById('pwGate');
+  const input=document.getElementById('pwInput');
+  const btn=document.getElementById('pwBtn');
+  const err=document.getElementById('pwErr');
+  if(sessionStorage.getItem('auth')==='1'){ gate.style.display='none'; return; }
+  function attempt(){
+    if(input.value==='Thomas123'){ sessionStorage.setItem('auth','1'); gate.style.display='none'; }
+    else{ err.textContent='Wrong password — try again.'; input.value=''; input.focus(); }
+  }
+  btn.addEventListener('click',attempt);
+  input.addEventListener('keydown',e=>{ if(e.key==='Enter') attempt(); });
+  input.focus();
 })();
 </script>
 <div class="photo-lb" id="photoLb" role="dialog" aria-label="Photo lightbox">
