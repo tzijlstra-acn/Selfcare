@@ -171,6 +171,15 @@ body.reveal section.in{opacity:1;transform:none}
 .track-labels span:first-child{transform:translateX(0)}
 .track-labels span:last-child{transform:translateX(-100%)}
 .race-note{margin:18px 0 0;font-size:14.5px;line-height:1.6}
+.race-reveal{margin-top:18px}
+.race-secret-btn{display:flex;justify-content:space-between;align-items:center;width:100%;background:#F3F7F9;border:1px solid var(--line);border-radius:12px;padding:14px 18px;cursor:pointer;font:inherit;text-align:left;transition:background .15s}
+.race-secret-btn:hover{background:#EBF3F8;border-color:#BFCFDA}
+.race-secret-btn>span:first-child{font-family:"Baloo 2",cursive;font-weight:600;font-size:15px;color:var(--ink)}
+.expand-icon{font-size:13px;color:var(--alp);font-weight:500;white-space:nowrap;margin-left:12px}
+.race-secret{margin-top:14px;animation:pop .35s ease}
+.xray-wrap{margin-top:16px;text-align:center}
+.xray-img{max-width:420px;width:100%;border-radius:12px;box-shadow:var(--shadow);cursor:zoom-in}
+.xray-cap{font-size:12px;color:var(--ink-soft);font-style:italic;margin:8px 0 0}
 .race-note b{font-family:"Baloo 2",cursive;font-weight:600;color:var(--rood)}
 .race.run .track-fill{animation:fill 5.5s linear forwards}
 .race.run .runner{animation:run 5.5s linear forwards}
@@ -354,7 +363,7 @@ body.reveal section.in{opacity:1;transform:none}
   <header>
     <p class="eyebrow">Thomas Zijlstra · my self-care story</p>
     <h1>How to handle me</h1>
-    <p>My selfcare story — the honest field guide to who I am, what drives me, and how to work well with me.</p>
+    <p>Hey — welcome. A quick guide for colleagues: who I am, what makes me tick, and how to get the best out of working together.</p>
     <div class="pills">
       <span class="pill">Dutch–Austrian</span><span class="pill">Zürich</span>
       <span class="pill">Sporty</span><span class="pill">33</span><span class="pill">57 countries</span>
@@ -458,8 +467,32 @@ body.reveal section.in{opacity:1;transform:none}
           <span style="left:100%">42.2 km · 3:30</span>
         </div>
       </div>
-      <p class="race-note"><b>The twist:</b> what I brushed off as a niggle around km 22 was a stress fracture — too much mileage had quietly cracked the fibula in two places, no single misstep involved. Sub-3 was gone, so I jogged the final ~20 km on it and finished anyway, only finding out five days later at the doctor. Not advisable, not clever — but I finished.</p>
+      <div class="race-reveal">
+        <button class="race-secret-btn" id="raceRevealBtn">
+          <span>🤫 Something happened at km 22…</span>
+          <span class="expand-icon">tap to find out →</span>
+        </button>
+        <div class="race-secret" id="raceSecret" style="display:none">
+          <p class="race-note"><b>The twist:</b> what I brushed off as a niggle around km 22 was a stress fracture — too much mileage had quietly cracked the fibula in two places, no single misstep involved. Sub-3 was gone, so I jogged the final ~20 km on it and finished anyway, only finding out five days later at the doctor. Not advisable. Not clever. But I finished.</p>
+          <div class="xray-wrap">
+            <img src="Images/Leg/IMG_1891.jpeg" alt="Fibula stress fracture X-ray" class="xray-img collage-img" data-country="Fibula X-ray" loading="lazy">
+            <p class="xray-cap">The evidence. Two stress fractures in the fibula. Yes, I ran on this.</p>
+          </div>
+        </div>
+      </div>
       <button class="btn btn-ghost replay-btn" id="replayRace">↻ Replay the race</button>
+    </div>
+    <div class="card collage" style="margin-top:14px">
+      <h3>On the run</h3>
+      <p class="sub">The roads, the early mornings, and the occasionally unwise race decisions.</p>
+      <div class="cg" style="margin-top:10px">
+        <div class="ci"><img src="Images/Running/IMG_1881.jpeg" alt="Running" class="collage-img" data-country="Running" loading="lazy"><span class="cl">Running</span></div>
+        <div class="ci"><img src="Images/Running/IMG_1882.jpeg" alt="Running" class="collage-img" data-country="Running" loading="lazy"><span class="cl">Running</span></div>
+        <div class="ci"><img src="Images/Running/IMG_1883.jpeg" alt="Running" class="collage-img" data-country="Running" loading="lazy"><span class="cl">Running</span></div>
+        <div class="ci"><img src="Images/Running/IMG_1885.jpeg" alt="Running" class="collage-img" data-country="Running" loading="lazy"><span class="cl">Running</span></div>
+        <div class="ci"><img src="Images/Running/IMG_1888.jpeg" alt="Running" class="collage-img" data-country="Running" loading="lazy"><span class="cl">Running</span></div>
+        <div class="ci"><img src="Images/Running/IMG_1890.jpeg" alt="Running" class="collage-img" data-country="Running" loading="lazy"><span class="cl">Running</span></div>
+      </div>
     </div>
   </section>
 
@@ -737,21 +770,16 @@ body.reveal section.in{opacity:1;transform:none}
         <div class="fact" data-cat="work"><p class="k">🧭 Direct, in a Dutch way</p><p class="v">It's about efficiency and the right answer — never personal. Push back, bring data, change my mind.</p></div>
         <div class="fact" data-cat="work"><p class="k">📈 Self-improvement is the whole game</p><p class="v">My number-one love. Always trying to get a little better at something.</p></div>
         <div class="fact" data-cat="work"><p class="k">🧠 Friends outside consulting</p><p class="v">Partly shared hobbies, partly to keep hearing genuinely different viewpoints — doctors, architects, people who think in completely different ways.</p></div>
-        <div class="fact" data-cat="work"><p class="k">🎯 Meetings, not "chats"</p><p class="v">Allergic to vague office drop-ins. Give me a goal-focused meeting or a relaxed team dinner.</p></div>
         <div class="fact" data-cat="work"><p class="k">🏨 Business-trip golden rule</p><p class="v">Sleep early, run first thing, then quietly demolish the all-inclusive buffet that's already been paid for. You're welcome.</p></div>
         <div class="fact" data-cat="work"><p class="k">😴 No drinking at work events</p><p class="v">Training reasons — and I love my sleep far too much to trade it.</p></div>
-        <div class="fact" data-cat="sport"><p class="k">🚴 Giro d'Italia, every year</p><p class="v">Watch the pros with my girlfriend, then ride the same roads ourselves. The most relaxed week of the year — and the eating is a sport of its own.</p></div>
         <div class="fact" data-cat="sport"><p class="k">🚵 Real MVP: Mathieu van der Poel</p><p class="v">Keep your Verstappen. The Dutchman who matters rides a bike — MVDP, all day.</p></div>
         <div class="fact" data-cat="sport"><p class="k">🎄 24.12 km every 24 December</p><p class="v">A Christmas-morning ritual that earns a genuinely heroic dinner the night before.</p></div>
-        <div class="fact" data-cat="food"><p class="k"><span class="fi fi-br"></span> Brazil, often</p><p class="v">My girlfriend's home, so I'm there a lot. Açaí and churrasco are strictly non-negotiable.</p></div>
         <div class="fact" data-cat="food"><p class="k">☕ Two coffees a day, max</p><p class="v">And still, somehow, no espresso machine. A classic thirty-something contradiction.</p></div>
         <div class="fact" data-cat="food"><p class="k">🧀 Gouda is the best cheese</p><p class="v">Not really up for debate, but I'll hear you out.</p></div>
-        <div class="fact" data-cat="food"><p class="k">🍽️ Amateur restaurant critics</p><p class="v">My girlfriend and I judge every place we eat, for sport. Scores may be issued.</p></div>
         <div class="fact" data-cat="life"><p class="k">🛖 A mountain hut I keep up myself</p><p class="v">Scything the grass by hand, improving the structure bit by bit. Turns out I'm a closet handyman.</p></div>
         <div class="fact" data-cat="life"><p class="k">🗣️ Three native languages</p><p class="v">Dutch, German, English. My French got rusty despite Paris and Société Générale.</p></div>
         <div class="fact" data-cat="life"><p class="k">🏔️ Two homes for the heart</p><p class="v">Tyrol and Limburg — mountains on one side, the warm south on the other.</p></div>
-        <div class="fact" data-cat="life"><p class="k">🚗 Daily driver: BMW 4 Series Gran Coupé</p><p class="v">Comfortable miles between the bikes and the mountains.</p></div>
-        <div class="fact" data-cat="life"><p class="k">🐶 Nutella, my Pomeranian</p><p class="v">Trained to eat only Gouda cheese. Impeccable taste — clearly learned from the best.</p></div>
+        <div class="fact" data-cat="life"><p class="k">🐶 Nutella, our Pomeranian</p><p class="v">Trained to eat only Gouda cheese. Impeccable taste — clearly learned from the best.</p></div>
         <div class="fact" data-cat="life"><p class="k">♟️ Chess: ~1000 elo, 19,000 games</p><p class="v">Enthusiasm comfortably ahead of skill. Find me on chess.com.</p></div>
       </div>
     </div>
@@ -770,24 +798,22 @@ body.reveal section.in{opacity:1;transform:none}
       <div class="sound-txt">
         <h3>Trance, always</h3>
         <p>Aly &amp; Fila, John O'Callaghan and Factor B on heavy rotation. I'm Dutch — uplifting trance is basically heritage. 138 BPM is a perfectly reasonable resting heart rate.</p>
-        <button class="play-btn" id="playSound" aria-pressed="false"><span class="play-ico">▶</span><span id="playLabel">Play a 138 BPM loop</span></button>
-        <p class="play-note">An original trance-style loop, generated live in your browser — not the real tracks (those belong to the artists, not me).</p>
       </div>
     </div>
     <div class="card sc-embeds">
       <div class="sc-track">
         <p class="sc-track-label">Factor B — Live @ Subculture Bangkok 2023</p>
-        <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1456367695&color=%231d242f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1456367695&color=%231d242f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
         <div style="font-size:10px;color:#cccccc;line-break:anywhere;word-break:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight:100"><a href="https://soundcloud.com/factorbmusic" title="Factor B" target="_blank" style="color:#cccccc;text-decoration:none">Factor B</a> · <a href="https://soundcloud.com/factorbmusic/factor-b-live-subculture-bangkok-2023" title="Factor B - Live @ Subculture Bangkok 2023" target="_blank" style="color:#cccccc;text-decoration:none">Factor B - Live @ Subculture Bangkok 2023</a></div>
       </div>
       <div class="sc-track">
         <p class="sc-track-label">Aly &amp; Fila B2B John O'Callaghan — Live @ ASOT 650 Utrecht</p>
-        <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A136558630&color=%231d242f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A136558630&color=%231d242f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
         <div style="font-size:10px;color:#cccccc;line-break:anywhere;word-break:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight:100"><a href="https://soundcloud.com/alyandfila" title="Aly &amp; Fila" target="_blank" style="color:#cccccc;text-decoration:none">Aly &amp; Fila</a> · <a href="https://soundcloud.com/alyandfila/aly-fila-b2b-john-ocallaghan" title="Aly &amp; Fila B2B John O&#x27;Callaghan - Live @ A State of Trance 650 Utrecht, The Netherlands" target="_blank" style="color:#cccccc;text-decoration:none">Aly &amp; Fila B2B John O&#x27;Callaghan - Live @ ASOT 650 Utrecht</a></div>
       </div>
       <div class="sc-track">
         <p class="sc-track-label">Cubicore — Oval Stage, A State Of Trance 1000 Festival, Utrecht</p>
-        <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1464038770&color=%231d242f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1464038770&color=%231d242f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
         <div style="font-size:10px;color:#cccccc;line-break:anywhere;word-break:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight:100"><a href="https://soundcloud.com/cubicore" title="CUBICORE" target="_blank" style="color:#cccccc;text-decoration:none">CUBICORE</a> · <a href="https://soundcloud.com/cubicore/cubicore-oval-stage-a-state-of-trance-festival-jaarbeurs-utrecht-netherlands" title="Cubicore @ Oval Stage, A State Of Trance 1000 Festival" target="_blank" style="color:#cccccc;text-decoration:none">Cubicore @ Oval Stage, ASOT 1000 Festival, Jaarbeurs Utrecht</a></div>
       </div>
     </div>
@@ -812,12 +838,12 @@ body.reveal section.in{opacity:1;transform:none}
   <!-- QUIZ -->
   <section>
     <div class="sec-head">
-      <h2>How to brighten my mood</h2>
-      <p class="lead">Five quick taps. You'll get a short, honest cheat sheet for working well with me — direct, like me.</p>
+      <h2>Are we compatible? A quick colleague test</h2>
+      <p class="lead">Five questions. No judgment. Find out how we'd work together — and what to expect from me.</p>
     </div>
     <div class="card quiz">
       <div id="quizBody"></div>
-      <button class="btn btn-primary" id="resultBtn">Show my cheat sheet</button>
+      <button class="btn btn-primary" id="resultBtn">Find out our compatibility →</button>
       <div class="result" id="result" aria-live="polite">
         <h3 id="resTitle"></h3>
         <div class="match" id="resMatch"></div>
@@ -893,10 +919,11 @@ const STAGES=[
   {age:0, i:"👶", t:"Born in the Netherlands", n:"Dutch dad, Austrian mum, raised in Limburg."},
   {age:6, i:"⚽", t:"FC Hoensbroek, last man back", n:"Defender until 15. Basically lived on the pitch."},
   {age:14,i:"🗞️", t:"First job: paper round", n:"Delivering newspapers before school at 14. Kept the round going with a broken hand — the papers don't deliver themselves."},
-  {age:18,i:"🎓", t:"Rotterdam — IBA, cum laude", n:"International Business Administration at Rotterdam School of Management. Finished early and with honours."},
+  {age:18,i:"🎓", t:"Rotterdam — IBA begins", n:"International Business Administration at Rotterdam School of Management."},
   {age:18,i:"💪", t:"Waiter & gym instructor", n:"Through uni: waiting tables and coaching at the university gym. There was always a job on the side."},
-  {age:21,i:"🗼", t:"Paris — data scientist", n:"Consumer spend and pricing for Carrefour and P&G. Football with colleagues, runs, and many PSG nights."},
-  {age:22,i:"🏦", t:"London — Société Générale", n:"DCM origination for Benelux & DACH after an MSc in Finance & Investment. Adopted Fulham."},
+  {age:20,i:"🏅", t:"Graduated IBA, cum laude", n:"Finished with honours — early and at the top of the class."},
+  {age:21,i:"🗼", t:"Paris internship — data science", n:"Consumer spend and pricing for Carrefour and P&G. Football, runs, and many PSG nights."},
+  {age:22,i:"🎓", t:"MSc completed, then London", n:"Master's in Finance & Investment done in Rotterdam, then straight to Société Générale — DCM origination for Benelux & DACH. Adopted Fulham."},
   {age:25,i:"❤️", t:"Met my girlfriend", n:"2018. Brazilian, brilliant, and far too patient with me. The best entry on this timeline."},
   {age:25,i:"📜", t:"Passed the CFA", n:"Three exams that ate every spare brain cell. No regrets."},
   {age:26,i:"🗻", t:"Everest Base Camp", n:"5,364 m through the Khumbu. My number one for nature, tied with Namibia."},
@@ -957,28 +984,30 @@ const ci=setInterval(()=>{n=Math.min(total,n+step);cc.textContent=n;if(n>=total)
 
 // ---------- QUIZ ----------
 const QUESTIONS=[
-  {q:"When you bring me work, it's usually…",
-   a:[["🎯 a sharp, specific question","direct"],["🧩 a tricky problem to crack together","spar"],["🏃 an idea hatched on a run or ride","move"],["🌍 a story from somewhere you've been","adv"]]},
-  {q:"Best way to win me over in a debate?",
-   a:[["📊 data and airtight logic","spar"],["⚡ get to the point, fast, no fluff","direct"],["🔭 a viewpoint I hadn't considered","spar"],["🙃 agree with me and manage upward","optics"]]},
-  {q:"To genuinely brighten my day…",
-   a:[["🏃 a lunch run or a ride","move"],["🎧 a great trance track","adv"],["🧠 a genuinely hard problem","spar"],["🍽️ a restaurant worth judging","adv"]]},
-  {q:"Your working style is…",
-   a:[["⚡ direct and fast","direct"],["🔬 analytical and rigorous","spar"],["💪 energetic, always moving","move"],["🤳 relationship-first, big on optics","optics"]]},
-  {q:"Your idea of a good work trip?",
-   a:[["🌅 early night, morning run, then the buffet","move"],["✅ get the work done, properly","direct"],["🗺️ new city, great food, explore","adv"],["🥂 be seen, work the room","optics"]]}
+  {q:"It's Monday morning. How do you roll in?",
+   a:[["☕ Coffee in hand, calendar already reviewed","sharp"],["💡 Brain buzzing with weekend ideas to share","spar"],["🏃 Just back from a run, full of energy","active"],["🗺️ Late — interesting weekend, no regrets","adv"]]},
+  {q:"Tight deadline, things are going sideways. You…",
+   a:[["📋 Break it down, assign owners, execute","sharp"],["🔍 Diagnose the root cause first — fix the right thing","spar"],["🔋 Go heads-down, power through on adrenaline","active"],["🎲 Wing it and trust the process","adv"]]},
+  {q:"It's lunch. What are we doing?",
+   a:[["🥗 Quick bite at desk — lots to do","sharp"],["🧠 Let's take a walk and think through that problem","spar"],["🏃 30-minute run, then grab something fast","active"],["🍜 I found a place — trust me, it's worth the detour","adv"]]},
+  {q:"Someone on the team finishes a marathon on a broken leg. Your reaction?",
+   a:[["🤯 Impressive but medically irresponsible","sharp"],["🏅 Respect the commitment — tell me the whole story","spar"],["💪 Hero. When's the next one?","active"],["📸 Did you at least get a photo?","adv"]]},
+  {q:"How do you prefer to give feedback?",
+   a:[["📝 Written, structured, no ambiguity","sharp"],["💬 Direct conversation — let's talk it through","spar"],["🚶 Walking meeting — less confrontational","active"],["😅 Wrapped in a joke, but the point lands","adv"]]}
 ];
 const RESULTS={
-  direct:{title:"The Straight Shooter",match:"high compatibility",blurb:"No fluff, no games — you say what you mean and get to the point. We're going to get on famously.",
-    tips:["Lead with the ask and the why; I'll respond fast.","Bullet points over backstory — spare me the throat-clearing.","Tell me when I'm wrong, plainly. I'd genuinely rather know."]},
-  spar:{title:"The Sparring Partner",match:"top-tier compatibility",blurb:"Bring me hard problems and stronger arguments. Critical thinking is the whole game for me.",
-    tips:["Bring the difficult problem, not the vague worry — be specific.","Disagree with data; changing my mind is a feature, not a fight.","Rigour earns my respect far faster than agreement."]},
-  move:{title:"The Training Partner",match:"strong compatibility",blurb:"You get it: movement is my reset button. A run beats a meeting most days of the week.",
-    tips:["Pull me into a lunch run or a ride — best reset there is.","Pitch ideas while we move; I think better on the go.","On work trips: early night, morning run, then we hit the buffet."]},
-  adv:{title:"The Fellow Adventurer",match:"surprisingly high compatibility",blurb:"Travel, trance, food worth arguing about — you speak my off-hours language fluently.",
-    tips:["Ask about Iran or China and happily lose an hour.","Share music and trip ideas freely; I'll do the same.","Bonus points for mountains, trails, and genuinely great food."]},
-  optics:{title:"The Optics Player",match:"opposites — but workable",blurb:"Ah, the smooth operator: great in the room, fluent in managing upward, the coffee for the boss always on time. We're not natural twins — substance is my love language — but you're very winnable. Lead with what you actually built and we'll get on just fine.",
-    tips:["Open with what you delivered, not who you charmed.","Substance first; the optics tend to look after themselves.","Bring me one properly solved problem and I'm sold."]}
+  sharp:{title:"The Sharp Colleague",match:"high compatibility — you'll keep me honest",
+    blurb:"You're organised, direct, and you come prepared. I respect that enormously. We'll get things done fast, as long as you let me push back occasionally.",
+    tips:["Lead with the conclusion — I'll ask for the detail if I need it.","You can tell me I'm wrong. I'll thank you for it.","Bring a doc, not a vague concern — I respond best to something concrete."]},
+  spar:{title:"The Thinking Partner",match:"top-tier compatibility — genuinely my favourite kind",
+    blurb:"You think before you speak, you argue with data, and you'd rather solve the real problem than the easy one. That's exactly the kind of colleague I work best with.",
+    tips:["Bring hard problems. Seriously, the harder the better.","Disagree out loud — I find consensus suspicious.","Expect me to play devil's advocate. It's a feature."]},
+  active:{title:"The Active Colleague",match:"strong compatibility — bonus points for running shoes",
+    blurb:"You understand that the best thinking happens away from the desk. Movement is my reset button, and working with someone who gets that makes everything easier.",
+    tips:["Suggest a walking meeting — I'll always say yes.","On work trips: early run, then we're at peak capacity.","Keep the energy up. I'm the same."]},
+  adv:{title:"The Fellow Adventurer",match:"surprisingly high compatibility — we'll never run out of things to talk about",
+    blurb:"You're curious, you go off-piste, and you find the detour more interesting than the destination. We'll get along very well — just maybe don't expect us both to be on time.",
+    tips:["Ask about Iran, Nepal, or Namibia — I'll talk for an hour.","Share your best food finds. I take these seriously.","Bring energy and a good story. That's most of it."]}
 };
 const answers={};
 const qBody=document.getElementById('quizBody');
@@ -1052,6 +1081,17 @@ function playRace(){
 const replayBtn=document.getElementById('replayRace');
 if(replayBtn) replayBtn.addEventListener('click',playRace);
 
+(function(){
+  const btn=document.getElementById('raceRevealBtn');
+  const secret=document.getElementById('raceSecret');
+  if(!btn||!secret) return;
+  btn.addEventListener('click',()=>{
+    const open=secret.style.display!=='none';
+    secret.style.display=open?'none':'block';
+    btn.querySelector('.expand-icon').textContent=open?'tap to find out →':'tap to hide ↑';
+  });
+})();
+
 const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!reduceMotion){
   document.body.classList.add('reveal');
@@ -1064,78 +1104,6 @@ if(!reduceMotion){
   },{threshold:.12});
   document.querySelectorAll('section').forEach(s=>io.observe(s));
 }
-// ---------- SOUND ----------
-(function(){
-  const btn=document.getElementById('playSound');
-  if(!btn) return;
-  const label=document.getElementById('playLabel');
-  const ico=btn.querySelector('.play-ico');
-  const eq=document.querySelector('.eq');
-  const bars=eq?[...eq.children]:[];
-  let actx=null, master=null, analyser=null, freqData=null;
-  let playing=false, step=0, nextNoteTime=0, timer=null, raf=null;
-  const BPM=138, sixteenth=60/BPM/4;
-  const Am=[220.00,261.63,329.63,440.00], F=[174.61,261.63,349.23,440.00], C=[261.63,329.63,392.00,523.25], G=[196.00,293.66,392.00,493.88];
-  const prog=[Am,Am,F,F,C,C,G,G];
-  function kick(t){
-    const o=actx.createOscillator(), g=actx.createGain();
-    o.frequency.setValueAtTime(150,t); o.frequency.exponentialRampToValueAtTime(45,t+0.12);
-    g.gain.setValueAtTime(0.9,t); g.gain.exponentialRampToValueAtTime(0.001,t+0.18);
-    o.connect(g).connect(master); o.start(t); o.stop(t+0.2);
-  }
-  function pluck(t,freq){
-    const o=actx.createOscillator(), g=actx.createGain(), f=actx.createBiquadFilter();
-    o.type='sawtooth'; o.frequency.value=freq;
-    f.type='lowpass'; f.frequency.setValueAtTime(3200,t); f.frequency.exponentialRampToValueAtTime(700,t+0.18); f.Q.value=7;
-    g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(0.16,t+0.008); g.gain.exponentialRampToValueAtTime(0.001,t+0.22);
-    o.connect(f).connect(g).connect(master); o.start(t); o.stop(t+0.26);
-  }
-  function sub(t,freq){
-    const o=actx.createOscillator(), g=actx.createGain();
-    o.type='sine'; o.frequency.value=freq/2;
-    g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(0.22,t+0.02); g.gain.exponentialRampToValueAtTime(0.001,t+sixteenth*3.6);
-    o.connect(g).connect(master); o.start(t); o.stop(t+sixteenth*4);
-  }
-  function schedule(){
-    while(nextNoteTime < actx.currentTime + 0.12){
-      const chord=prog[Math.floor(step/16)%prog.length];
-      const s=step%16;
-      if(s%4===0) kick(nextNoteTime);
-      if(s%8===0) sub(nextNoteTime, chord[0]);
-      pluck(nextNoteTime, chord[s%chord.length]);
-      nextNoteTime += sixteenth; step++;
-    }
-    timer=setTimeout(schedule,25);
-  }
-  function draw(){
-    if(analyser){
-      analyser.getByteFrequencyData(freqData);
-      bars.forEach((b,i)=>{ const v=(freqData[2+i*3]||0)/255; b.style.height=(16+v*84)+'%'; });
-    }
-    raf=requestAnimationFrame(draw);
-  }
-  function start(){
-    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
-    if(actx.state==='suspended') actx.resume();
-    master=actx.createGain(); master.gain.value=0.4;
-    analyser=actx.createAnalyser(); analyser.fftSize=128; freqData=new Uint8Array(analyser.frequencyBinCount);
-    const comp=actx.createDynamicsCompressor();
-    master.connect(comp); comp.connect(analyser); analyser.connect(actx.destination);
-    step=0; nextNoteTime=actx.currentTime+0.06; playing=true;
-    if(eq) eq.classList.add('live');
-    schedule(); draw();
-    btn.setAttribute('aria-pressed','true'); ico.textContent='⏸'; label.textContent='Pause';
-  }
-  function stop(){
-    playing=false; clearTimeout(timer); cancelAnimationFrame(raf);
-    if(master&&actx){ try{ master.gain.setValueAtTime(master.gain.value,actx.currentTime); master.gain.exponentialRampToValueAtTime(0.0001,actx.currentTime+0.12);}catch(e){} }
-    if(eq) eq.classList.remove('live');
-    bars.forEach(b=>b.style.height='');
-    btn.setAttribute('aria-pressed','false'); ico.textContent='▶'; label.textContent='Play a 138 BPM loop';
-  }
-  btn.addEventListener('click',()=>{ playing?stop():start(); });
-})();
-
 // ---------- GOOD-TO-KNOW FILTER ----------
 (function(){
   const tabs=document.getElementById('gtkTabs'), grid=document.getElementById('gtkGrid');
