@@ -371,7 +371,7 @@ body.reveal section.in{opacity:1;transform:none}
   </header>
 
   <!-- MOOD PANEL -->
-  <section>
+  <section style="display:none">
     <div class="sec-head">
       <h2>Today's mood</h2>
       <p class="lead">Tap a mood to see where my battery's at and the kindest way to meet me there.</p>
@@ -459,6 +459,8 @@ body.reveal section.in{opacity:1;transform:none}
         <div class="ci"><img src="Images/Biking/IMG_1868.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
         <div class="ci"><img src="Images/Biking/IMG_1869.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
         <div class="ci"><img src="Images/Biking/IMG_1870.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
+        <div class="ci"><img src="Images/Biking/IMG_1887.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
+        <div class="ci"><img src="Images/Biking/IMG_1889.jpeg" alt="Cycling" class="collage-img" data-country="On the bike" loading="lazy"><span class="cl">On the bike</span></div>
       </div>
     </div>
   </section>
@@ -877,17 +879,16 @@ setMood(MOODS.find(m=>m.key==="friday")||MOODS[0]);
 const STAGES=[
   {age:0, i:"👶", t:"Born in the Netherlands", n:"Dutch dad, Austrian mum, raised in Limburg."},
   {age:6, i:"⚽", t:"FC Hoensbroek, last man back", n:"Defender until 15. Basically lived on the pitch."},
-  {age:14,i:"🗞️", t:"First job: paper round", n:"Delivering newspapers before school at 14. Kept the round going with a broken hand — the papers don't deliver themselves."},
+  {age:14,i:"🗞️", t:"First job: paper round", n:"Delivering newspapers before school. Early starts, every morning — and I loved it."},
   {age:18,i:"🎓", t:"Rotterdam — IBA begins", n:"International Business Administration at Rotterdam School of Management."},
-  {age:18,i:"💪", t:"Waiter & gym instructor", n:"Through uni: waiting tables and coaching at the university gym. There was always a job on the side."},
+  {age:18,i:"💪", t:"Waiter & gym instructor", n:"Through uni: waiting tables and coaching at the university gym. Always something on the side."},
   {age:20,i:"🏅", t:"Graduated IBA, cum laude", n:"Finished with honours — early and at the top of the class."},
-  {age:21,i:"🗼", t:"Paris internship — data science", n:"Consumer spend and pricing for Carrefour and P&G. Football, runs, and many PSG nights."},
-  {age:22,i:"🎓", t:"MSc completed, then London", n:"Master's in Finance & Investment done in Rotterdam, then straight to Société Générale — DCM origination for Benelux & DACH. Adopted Fulham."},
-  {age:25,i:"❤️", t:"Met my girlfriend", n:"2018. Brazilian, brilliant, and far too patient with me. The best entry on this timeline."},
-  {age:25,i:"📜", t:"Passed the CFA", n:"Three exams that ate every spare brain cell. No regrets."},
+  {age:21,i:"🗼", t:"Paris — data science internship", n:"Consumer spend and pricing for Carrefour and P&G. Football, morning runs, many PSG nights."},
+  {age:22,i:"🏦", t:"MSc done, then London", n:"Master's in Finance & Investment, then straight to Société Générale in London — DCM origination for Benelux & DACH."},
+  {age:25,i:"📜", t:"Passed the CFA", n:"Three exams, a lot of early mornings, worth every one of them."},
   {age:26,i:"🗻", t:"Everest Base Camp", n:"5,364 m through the Khumbu. My number one for nature, tied with Namibia."},
-  {age:30,i:"🏃", t:"First race: a marathon", n:"My debut competition? A full marathon in Zürich, trained on lunch breaks, on a broken fibula. Gloriously so."},
-  {age:33,i:"🏡", t:"Life now", n:"A house, a girlfriend, two carbon bikes, one Gouda-only Pomeranian (Nutella), and a permanent itch to get better at things."}
+  {age:30,i:"🏃", t:"First race: a marathon", n:"First competition, full marathon in Zürich, trained on lunch breaks. Crossed the finish line — that's the story."},
+  {age:33,i:"🏡", t:"Life now", n:"A house in Zürich, two carbon bikes, one Gouda-obsessed Pomeranian (Nutella), and always something new to train for."}
 ];
 const tl=document.getElementById('timeline');
 STAGES.forEach((s,i)=>{
