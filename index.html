@@ -8,8 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css">
-<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <style>
 :root{
   --ink:#28324C; --ink-soft:#5B6577; --line:#E4E7EA;
@@ -286,6 +284,9 @@ body.reveal section.in{opacity:1;transform:none}
 .play-ico{font-size:12px;line-height:1}
 .play-note{margin:9px 0 0;font-size:11.5px;font-style:italic;color:var(--ink-soft)}
 .eq.live span{animation:none;transition:height .08s linear}
+.sc-embeds{padding:22px 26px;display:flex;flex-direction:column;gap:22px;margin-top:14px}
+.sc-track-label{font-family:"Baloo 2",cursive;font-weight:600;font-size:14px;color:var(--alp);margin:0 0 8px;letter-spacing:.02em}
+.sc-track iframe{display:block;border-radius:8px;overflow:hidden}
 
 /* flag icons */
 .fi{border-radius:2px;vertical-align:-2px}
@@ -353,7 +354,7 @@ body.reveal section.in{opacity:1;transform:none}
   <header>
     <p class="eyebrow">Thomas Zijlstra · my self-care story</p>
     <h1>How to handle me</h1>
-    <p>A direct, sincere (and occasionally silly) field guide to my moods, my values, and the fastest ways to work well with me.</p>
+    <p>My selfcare story — the honest field guide to who I am, what drives me, and how to work well with me.</p>
     <div class="pills">
       <span class="pill">Dutch–Austrian</span><span class="pill">Zürich</span>
       <span class="pill">Sporty</span><span class="pill">33</span><span class="pill">57 countries</span>
@@ -599,7 +600,7 @@ body.reveal section.in{opacity:1;transform:none}
       <p class="lead">Watch every stage. Then go ride the roads yourself.</p>
     </div>
     <div class="card" style="padding:22px 26px">
-      <p style="margin:0 0 0;font-size:15px;line-height:1.7;color:var(--ink-soft)">Every May, the Giro d'Italia takes over the living room — my girlfriend and I watch every stage, argue about breakaways, and within weeks we're in Italy on the bikes ourselves. The most relaxed (and most calorie-dense) week of the year. Afterwards, MVDP is still better than Verstappen.</p>
+      <p style="margin:0 0 0;font-size:15px;line-height:1.7;color:var(--ink-soft)">Every May, the Giro d'Italia takes over. We actually go — drive to a mountain stage, find a small village on the climb, and wait hours in the cold just to watch the riders fly past in thirty seconds of pure spectacle. Then we get on our own bikes and ride those same roads. The pasta intake is non-negotiable. MVDP over Verstappen, every day of the week.</p>
     </div>
     <div class="card collage" style="margin-top:14px">
       <h3>On the bike</h3>
@@ -773,6 +774,23 @@ body.reveal section.in{opacity:1;transform:none}
         <p class="play-note">An original trance-style loop, generated live in your browser — not the real tracks (those belong to the artists, not me).</p>
       </div>
     </div>
+    <div class="card sc-embeds">
+      <div class="sc-track">
+        <p class="sc-track-label">Factor B — Live @ Subculture Bangkok 2023</p>
+        <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1456367695&color=%231d242f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+        <div style="font-size:10px;color:#cccccc;line-break:anywhere;word-break:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight:100"><a href="https://soundcloud.com/factorbmusic" title="Factor B" target="_blank" style="color:#cccccc;text-decoration:none">Factor B</a> · <a href="https://soundcloud.com/factorbmusic/factor-b-live-subculture-bangkok-2023" title="Factor B - Live @ Subculture Bangkok 2023" target="_blank" style="color:#cccccc;text-decoration:none">Factor B - Live @ Subculture Bangkok 2023</a></div>
+      </div>
+      <div class="sc-track">
+        <p class="sc-track-label">Aly &amp; Fila B2B John O'Callaghan — Live @ ASOT 650 Utrecht</p>
+        <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A136558630&color=%231d242f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+        <div style="font-size:10px;color:#cccccc;line-break:anywhere;word-break:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight:100"><a href="https://soundcloud.com/alyandfila" title="Aly &amp; Fila" target="_blank" style="color:#cccccc;text-decoration:none">Aly &amp; Fila</a> · <a href="https://soundcloud.com/alyandfila/aly-fila-b2b-john-ocallaghan" title="Aly &amp; Fila B2B John O&#x27;Callaghan - Live @ A State of Trance 650 Utrecht, The Netherlands" target="_blank" style="color:#cccccc;text-decoration:none">Aly &amp; Fila B2B John O&#x27;Callaghan - Live @ ASOT 650 Utrecht</a></div>
+      </div>
+      <div class="sc-track">
+        <p class="sc-track-label">Cubicore — Oval Stage, A State Of Trance 1000 Festival, Utrecht</p>
+        <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay; encrypted-media" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1464038770&color=%231d242f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+        <div style="font-size:10px;color:#cccccc;line-break:anywhere;word-break:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight:100"><a href="https://soundcloud.com/cubicore" title="CUBICORE" target="_blank" style="color:#cccccc;text-decoration:none">CUBICORE</a> · <a href="https://soundcloud.com/cubicore/cubicore-oval-stage-a-state-of-trance-festival-jaarbeurs-utrecht-netherlands" title="Cubicore @ Oval Stage, A State Of Trance 1000 Festival" target="_blank" style="color:#cccccc;text-decoration:none">Cubicore @ Oval Stage, ASOT 1000 Festival, Jaarbeurs Utrecht</a></div>
+      </div>
+    </div>
   </section>
 
   <!-- FUTURE -->
@@ -828,8 +846,7 @@ const FACES = {
   tired:`<path d="M97 72 Q102 74 107 72" fill="none" stroke="#8A6238" stroke-width="2.2" stroke-linecap="round"/><path d="M113 72 Q118 74 123 72" fill="none" stroke="#8A6238" stroke-width="2.2" stroke-linecap="round"/><path d="M97 78 Q102 81 107 78" fill="none" stroke="#3A4A56" stroke-width="2.4" stroke-linecap="round"/><path d="M113 78 Q118 81 123 78" fill="none" stroke="#3A4A56" stroke-width="2.4" stroke-linecap="round"/><path d="M98 83 Q102 84 106 83" fill="none" stroke="#CFA07C" stroke-width="1" stroke-linecap="round"/><path d="M114 83 Q118 84 122 83" fill="none" stroke="#CFA07C" stroke-width="1" stroke-linecap="round"/><path d="M102 100 Q110 98 118 100" fill="none" stroke="#B0694C" stroke-width="2.4" stroke-linecap="round"/>`,
   "post-workout":`<ellipse cx="97" cy="90" rx="5" ry="3" fill="#E2604C" opacity="0.5"/><ellipse cx="123" cy="90" rx="5" ry="3" fill="#E2604C" opacity="0.5"/><path d="M97 70 Q102 67 107 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M113 70 Q118 67 123 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="102" cy="77" rx="4.5" ry="3" fill="#fff"/><ellipse cx="118" cy="77" rx="4.5" ry="3" fill="#fff"/><circle cx="102" cy="77" r="2.4" fill="#6B4A2E"/><circle cx="118" cy="77" r="2.4" fill="#6B4A2E"/><ellipse cx="110" cy="100" rx="6" ry="4.5" fill="#9A4334"/><path d="M104 98 Q110 101 116 98" fill="none" stroke="#B0694C" stroke-width="1.6" stroke-linecap="round"/><path d="M127 63 Q124 70 127 72 Q130 70 127 63 Z" fill="#8FC0DE"/><path d="M100 56 Q98 60 100 61 Q102 60 100 56 Z" fill="#8FC0DE"/>`,
   friday:`<path d="M97 70 Q102 67 107 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M113 70 Q118 67 123 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M97 78 Q102 81 107 78" fill="none" stroke="#6B4A2E" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="118" cy="77" rx="5" ry="3.4" fill="#fff"/><circle cx="118" cy="77" r="2.6" fill="#6B4A2E"/><circle cx="118" cy="77" r="1" fill="#23170E"/><path d="M99 96 Q110 105 121 96" fill="none" stroke="#B0694C" stroke-width="2.6" stroke-linecap="round"/><path d="M128 58 L128 64 M125 61 L131 61" fill="none" stroke="#E0A93C" stroke-width="1.4" stroke-linecap="round"/>`,
-  happy:`<ellipse cx="97" cy="90" rx="4.5" ry="3" fill="#E89B7A" opacity="0.55"/><ellipse cx="123" cy="90" rx="4.5" ry="3" fill="#E89B7A" opacity="0.55"/><path d="M97 70 Q102 67 107 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M113 70 Q118 67 123 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M97 79 Q102 75 107 79" fill="none" stroke="#6B4A2E" stroke-width="2.4" stroke-linecap="round"/><path d="M113 79 Q118 75 123 79" fill="none" stroke="#6B4A2E" stroke-width="2.4" stroke-linecap="round"/><path d="M100 97 Q110 104 120 97" fill="none" stroke="#B0694C" stroke-width="2.6" stroke-linecap="round"/>`,
-  demotivated:`<path d="M97 72 Q102 73 107 72" fill="none" stroke="#8A6238" stroke-width="2.2" stroke-linecap="round"/><path d="M113 72 Q118 73 123 72" fill="none" stroke="#8A6238" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="102" cy="78" rx="4.6" ry="3" fill="#fff"/><ellipse cx="118" cy="78" rx="4.6" ry="3" fill="#fff"/><circle cx="102" cy="79" r="2.3" fill="#6B4A2E"/><circle cx="118" cy="79" r="2.3" fill="#6B4A2E"/><path d="M101 101 Q110 97 119 101" fill="none" stroke="#B0694C" stroke-width="2.4" stroke-linecap="round"/>`
+  happy:`<ellipse cx="97" cy="90" rx="4.5" ry="3" fill="#E89B7A" opacity="0.55"/><ellipse cx="123" cy="90" rx="4.5" ry="3" fill="#E89B7A" opacity="0.55"/><path d="M97 70 Q102 67 107 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M113 70 Q118 67 123 70" fill="none" stroke="#8A6238" stroke-width="2.4" stroke-linecap="round"/><path d="M97 79 Q102 75 107 79" fill="none" stroke="#6B4A2E" stroke-width="2.4" stroke-linecap="round"/><path d="M113 79 Q118 75 123 79" fill="none" stroke="#6B4A2E" stroke-width="2.4" stroke-linecap="round"/><path d="M100 97 Q110 104 120 97" fill="none" stroke="#B0694C" stroke-width="2.6" stroke-linecap="round"/>`
 };
 const HEAD_BASE=`<ellipse cx="89" cy="74" rx="4" ry="6" fill="#EFC4A2" stroke="#E0AE89" stroke-width="1"/><ellipse cx="131" cy="74" rx="4" ry="6" fill="#EFC4A2" stroke="#E0AE89" stroke-width="1"/><path d="M90 72 Q90 47 110 47 Q130 47 130 72 Q130 89 119 98 Q114 103 110 103 Q106 103 101 98 Q90 89 90 72 Z" fill="#EFC4A2"/><path d="M90 70 Q86 46 110 45 Q134 46 130 70 Q126 58 110 57 Q96 57 88 66 Q86 67 90 70 Z" fill="#A87C4C"/><path d="M92 65 Q104 56 118 62 Q108 60 100 64 Z" fill="#8F663A"/><path d="M130 70 Q133 54 116 51 Q124 60 123 67 Z" fill="#8F663A"/><path d="M110 79 L107 90 Q110 93 113 90" fill="none" stroke="#D9A87F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M94 100 Q110 107 126 100" fill="none" stroke="#E0AE89" stroke-width="1.5" stroke-linecap="round"/>`;
 function miniHead(mood){return `<svg viewBox="84 43 52 64" xmlns="http://www.w3.org/2000/svg">${HEAD_BASE}${FACES[mood]||FACES.calm}</svg>`;}
@@ -839,7 +856,6 @@ const MOODS = [
   {key:"focused",  battery:65, color:"#28324C", anim:"anim-still",  nudge:"Deep work in progress. Drop me a message and I'll come back to you — instant replies aren't happening."},
   {key:"stressed", battery:30, color:"#C8102E", anim:"anim-shake",  nudge:"A little underwater. The kindest help right now is one clear priority and a few minutes of quiet."},
   {key:"tired",    battery:20, color:"#7C8A99", anim:"anim-slump",  nudge:"Running low. A short walk, some water, and please — no big decisions until I've recharged."},
-  {key:"demotivated",battery:35,color:"#6E7E92",anim:"anim-bob",    nudge:"Not my usual fire right now — motivation took a knock lately. What helps: a hard training session, time with people I actually rate, and remembering this is a dip, not a verdict. Be patient with me; I bounce back."},
   {key:"post-workout",battery:92,color:"#F5821F",anim:"anim-breathe",nudge:"Endorphins online. Perfect moment to bring me a tricky problem — I'm warmed up and game."},
   {key:"friday",   battery:78, color:"#E0A93C", anim:"anim-sway",   nudge:"Wind-down mode. Light topics, a laugh, and let's save the heavy stuff for Monday."},
   {key:"happy",    battery:100,color:"#4E9A5B", anim:"anim-bounce", nudge:"Full battery. Happy to help, brainstorm, or just chat about your weekend."}
@@ -870,7 +886,7 @@ MOODS.forEach(m=>{
   b.onclick=()=>setMood(m);
   grid.appendChild(b);
 });
-setMood(MOODS.find(m=>m.key==="demotivated")||MOODS[0]);
+setMood(MOODS.find(m=>m.key==="friday")||MOODS[0]);
 
 // ---------- LIFECYCLE ----------
 const STAGES=[
